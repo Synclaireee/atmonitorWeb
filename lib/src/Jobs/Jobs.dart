@@ -1,0 +1,34 @@
+class Jobs{
+  DateTime acceptedTime;
+  DateTime assignedTime;
+  String assignedTo;
+  DateTime finishedTime;
+  DateTime hAcceptedTime;
+  DateTime hAssignedTime;
+  String image;
+  String location;
+  String needHelpReason;
+  DateTime needHelpTime;
+  List<String> partsName;
+  String pktId;
+  String pktName;
+  String problemCode;
+  String problemDesc;
+  String serialNum;
+  String solution;
+  DateTime startDatetime;
+  String status;
+  String ticketNum;
+  String triedImage;
+  String triedSolution;
+  DateTime vAcceptedTime;
+  DateTime vAssignedTime;
+  String vAssignedTo;
+  DateTime vFinishedTime;
+  String vImage;
+  String vSolution;
+  String vStatus;
+  String vendorId;
+  String vendorName;
+  String wsid;
+}
