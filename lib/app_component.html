@@ -1,87 +1,29 @@
-<router-outlet [routes]="Routes.all"></router-outlet>
 <div *ngIf="!isAuthenticated()">
     <firebase-auth-ui [disableAutoSignIn]="false" [uiConfig]="getUIConfig()"></firebase-auth-ui>
 </div>
-<div *ngIf="isAuthenticated()" border="1" width="100%">
-    Halo {{displayName}}
-</div>
-<div *ngIf="isAuthenticated()" border="1" width="100%">
-    <div class="limiter">
-        <div class="container-table100">
-            <div class="table100 ver1 m-b-11">
-                <div class="table100-head">
-                    <table>
-                        <thead>
-                        <tr class="row100 head">
-                            <th class="cell100 column1">Ticket</th>
-                            <th class="cell100 column2">WSID</th>
-                            <th class="cell100 column3">Lokasi</th>
-                            <th class="cell100 column4">SN</th>
-                            <th class="cell100 column5">Vendor</th>
-                            <th class="cell100 column6">Waktu</th>
-                            <th class="cell100 column7">Masalah</th>
-                            <th class="cell100 column8">Status</th>
-                            <th class="cell100 column9">Aksi</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="table100-body js-pscroll">
-                    <table>
-                        <tbody>
-                        <tr class="row100 body" *ngFor="let job of jobList">
-                            <td class="cell100 column1" *ngIf="job.data()['status'] !='FINISHED'">
-                                {{job.data()["ticketNum"].toString()}}
-                            </td>
-                            <td class="cell100 column2" *ngIf="job.data()['status'] !='FINISHED'">
-                                {{job.data()["wsid"].toString()}}
-                            </td>
-                            <td class="cell100 column3" *ngIf="job.data()['status'] !='FINISHED'">
-                                {{job.data()["location"].toString()}}
-                            </td>
-                            <td class="cell100 column4" *ngIf="job.data()['status'] !='FINISHED'">
-                                {{job.data()["serialNum"].toString()}}
-                            </td>
-                            <td class="cell100 column5" *ngIf="job.data()['status'] !='FINISHED'">
-                                null
-                            </td>
-                            <td class="cell100 column6" *ngIf="job.data()['status'] !='FINISHED'">
-                                {{job.data()["startDatetime"].toString()}}
-                            </td>
-                            <td class="cell100 column7" *ngIf="job.data()['status'] !='FINISHED'">
-                                {{job.data()["problemDesc"].toString()}}
-                            </td>
-                            <td class="cell100 column8" *ngIf="job.data()['status'] !='FINISHED'">
-                                {{job.data()["status"].toString()}}
-                            </td>
-                            <td class="cell100 column9" *ngIf="job.data()['status'] !='FINISHED'">
-                                <div class="fab">
-                                    <material-fab mini title="Assign"
-                                                  *ngIf="job.data()['status'] =='PENDING' || job.data()['status'] =='DECLINED'" [routerLink]="RoutePaths.assignTo.toUrl()" [routerLinkActive] ="'active'">
-                                        <material-icon mini raised icon="motorcycle"></material-icon>
-                                    </material-fab>
-                                    <material-fab mini title="Delete" *ngIf="job.data()['isManual'].toString() =='true'"
-                                                  (trigger)="deleteManualJob(job.data()['ticketNum'])">
-                                        <material-icon icon="delete"></material-icon>
-                                    </material-fab>
-                                    <material-fab mini title="Approve" *ngIf="job.data()['status'] =='NEED HELP'">
-                                        <material-icon icon="person_add"></material-icon>
-                                    </material-fab>
-                                    <material-fab mini title="History Machine">
-                                        <material-icon icon="history"></material-icon>
-                                    </material-fab>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div *ngIf="isAuthenticated()">
-    <br><br>
-    <br><br>
-    <material-fab raised (trigger)="logout()">Logout</material-fab>
+    <!--navBar-->
+    <nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top">
+        <a class="navbar-brand" href="">Logo</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="RoutePaths.dashboard.toUrl()" [routerLinkActive]="'active'">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="RoutePaths.assignTo.toUrl()" [routerLinkActive]="'active'">test2</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto align-right">
+                <li class="nav-item navbar-text col-auto">
+                    <div>Halo, {{uName}}</div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="logout()" href="">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--endNavbar-->
 </div>
+<router-outlet [routes]="Routes.all"></router-outlet>

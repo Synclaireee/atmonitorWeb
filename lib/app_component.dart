@@ -17,12 +17,9 @@ import 'src/routes.dart';
 @Component(
   selector: 'my-app',
   styleUrls: [
+    'app_component.css',
     'src/util/util.css',
-    'src/util/animate.css',
-    'src/util/table.css',
-    'src/util/perfect-scrollbar.css',
     'src/util/bootstrap.min.css',
-    'src/util/select2.min.css'
   ],
   templateUrl: 'app_component.html',
   directives: [
@@ -35,27 +32,22 @@ import 'src/routes.dart';
   pipes: [commonPipes],
   exports: [RoutePaths, Routes],
 )
-
 class AppComponent implements OnInit {
-  List<DocumentSnapshot> jobList;
   UIConfig _uiConfig;
+  Firestore db = fb.firestore();
+  String providerAccessToken = "";
+
+  bool isAuthenticated() => fb.auth().currentUser != null;
+
+  String get uid => fb.auth().currentUser?.uid;
+
+  String get uName => fb.auth().currentUser?.displayName;
+
+  Map<String, dynamic> get userJson => fb.auth().currentUser?.toJson();
 
   @override
   void ngOnInit() {
     // TODO: implement ngOnInit
-    fb.initializeApp(
-        apiKey: 'AIzaSyDsjgrTbtdNenCDvx76qhcKR-hGIWJ9x58',
-        authDomain: 'fir-testing-c9acf.firebaseapp.com',
-        databaseURL: 'https://fir-testing-c9acf.firebaseio.com',
-        projectId: 'fir-testing-c9acf',
-        storageBucket: 'fir-testing-c9acf.appspot.com',
-        messagingSenderId: '895394713441');
-    getJobs();
-  }
-
-  Future<Null> logout() async {
-    await fb.auth().signOut();
-    providerAccessToken = "";
   }
 
   PromiseJsImpl<void> signInFailure(AuthUIError authUiError) {
@@ -88,53 +80,21 @@ class AppComponent implements OnInit {
           signInFailure: signInFailure);
 
       _uiConfig = new UIConfig(
-          signInSuccessUrl: '/',
+          signInSuccessUrl: '/dashboard',
           signInOptions: [
             fb.EmailAuthProvider.PROVIDER_ID,
           ],
           signInFlow: "redirect",
           //signInFlow: "popup",
           credentialHelper: NONE,
-          tosUrl: '/',
+          tosUrl: '/dashboard',
           callbacks: callbacks);
     }
     return _uiConfig;
   }
 
-  bool isAuthenticated() => fb.auth().currentUser != null;
-
-  String get userEmail => fb.auth().currentUser?.email;
-
-  String get displayName => fb.auth().currentUser?.displayName;
-
-  Map<String, dynamic> get userJson => fb.auth().currentUser?.toJson();
-
-  // If the provider gave us an access token, we put it here.
-  String providerAccessToken = "";
-
-  getJobs() {
-    Firestore db = fb.firestore();
-    CollectionReference ref = db.collection("jobs");
-    ref.get().then((snapshot) {
-      jobList = snapshot.docs;
-    });
-    print(jobList);
+  Future<Null> logout() async {
+    await fb.auth().signOut();
+    providerAccessToken = "";
   }
-
-  deleteManualJob(String ticketNum) {
-    Firestore db = fb.firestore();
-    Query ref =
-        db.collection("jobs").where("ticketNum", "==", ticketNum);
-    ref.get().then((snapshot) {
-      db.runTransaction((Transaction transaction) async {
-        DocumentSnapshot documentSnapshot =
-            await transaction.get(snapshot.docs.first.ref);
-
-        await transaction
-            .update(documentSnapshot.ref, data: {"status": "DELETED"});
-
-      });
-    });
-  }
-// Nothing here yet. All logic is in TodoListComponent.
 }

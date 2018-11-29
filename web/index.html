@@ -8,25 +8,18 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <script defer src="main.dart.js"></script>
 
-    <script>
-        // WARNING: DO NOT set the <base href> like this in production!
-        // Details: https://webdev.dartlang.org/angular/guide/router
-        (function () {
-            var m = document.location.pathname.match(/^(\/[-\w]+)+\/web($|\/)/);
-            document.write('<base href="' + (m ? m[0] : '/') + '" />');
-        }());
-    </script>
+
 
     <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-firestore.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
-    <script type = "text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <script type = "text/javascript" src="js/table.js" ></script>
+    <script type = "text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+    <script type = "text/javascript" src="/js/table.js" ></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-
+    <base href="/">
   </head>
   <body>
   <div>
