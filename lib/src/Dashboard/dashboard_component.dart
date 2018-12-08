@@ -46,7 +46,7 @@ class DashboardComponent implements OnInit{
   void ngOnInit() {
     // TODO: implement ngOnInit
       getJobs();
-      isAdmin();
+      getCurrUser();
   }
 
   bool isAuthenticated() => fb.auth().currentUser != null;
@@ -57,11 +57,11 @@ class DashboardComponent implements OnInit{
 
   String get uid => fb.auth().currentUser?.uid;
 
-  Map<String, dynamic> get userJson => fb.auth().currentUser?.toJson();
+  Map<String,dynamic> currUser;
 
   // If the provider gave us an access token, we put it here.
   String providerAccessToken = "";
-
+  //get all Job List
   getJobs() {
     CollectionReference ref = db.collection("jobs");
     ref.get().then((snapshot) {
@@ -70,9 +70,9 @@ class DashboardComponent implements OnInit{
     print(jobList);
   }
 
+  //is currUser admin?
   isAdmin() {
-    db.collection("users").where("uid", "==", uid).get().then((snapshot) {
-      String role = snapshot.docs.first.data()['role'];
+      String role = currUser['role'];
       String temp = role.substring(0, role.indexOf(" "));
       if (temp == "Admin") {
         print(role);
@@ -80,11 +80,19 @@ class DashboardComponent implements OnInit{
       } else {
         admin = false;
       }
+  }
+
+  //getUser and Admin
+  getCurrUser() {
+    db.collection("users").where("uid","==",uid).get().then((snapshot){
+      currUser = snapshot.docs.first.data();
     }).whenComplete((){
+      isAdmin();
       futureComplete = true;
     });
   }
 
+  //delManualJob
   deleteManualJob(String ticketNum) {
     Firestore db = fb.firestore();
     Query ref =
@@ -100,4 +108,10 @@ class DashboardComponent implements OnInit{
       });
     });
   }
+
+  //generateJobUrl
+  String jobUrl(String para){
+    return RoutePaths.assignTo.toUrl(parameters: {jobId: '$para'});
+  }
+
 }

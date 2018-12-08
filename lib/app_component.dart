@@ -10,6 +10,7 @@ import 'package:firebase_dart_ui/firebase_dart_ui.dart';
 
 import 'package:firebase/src/interop/firebase_interop.dart';
 import 'src/routes.dart';
+import 'src/route_paths.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
 // Components info: https://webdev.dartlang.org/components
@@ -97,4 +98,5 @@ class AppComponent implements OnInit {
     await fb.auth().signOut();
     providerAccessToken = "";
   }
+
 }
