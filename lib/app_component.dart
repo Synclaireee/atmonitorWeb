@@ -46,9 +46,11 @@ class AppComponent implements OnInit {
 
   Map<String, dynamic> get userJson => fb.auth().currentUser?.toJson();
 
+  Router _route;
+  AppComponent(this._route);
+
   @override
   void ngOnInit() {
-    // TODO: implement ngOnInit
   }
 
   PromiseJsImpl<void> signInFailure(AuthUIError authUiError) {
@@ -81,14 +83,14 @@ class AppComponent implements OnInit {
           signInFailure: signInFailure);
 
       _uiConfig = new UIConfig(
-          signInSuccessUrl: '/dashboard',
+          signInSuccessUrl: '/',
           signInOptions: [
             fb.EmailAuthProvider.PROVIDER_ID,
           ],
           signInFlow: "redirect",
           //signInFlow: "popup",
           credentialHelper: NONE,
-          tosUrl: '/dashboard',
+          tosUrl: '/',
           callbacks: callbacks);
     }
     return _uiConfig;
@@ -98,5 +100,4 @@ class AppComponent implements OnInit {
     await fb.auth().signOut();
     providerAccessToken = "";
   }
-
 }

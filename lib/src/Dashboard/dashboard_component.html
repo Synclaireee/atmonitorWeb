@@ -1,89 +1,121 @@
-<div class="pt-5 mt-3" *ngIf="futureComplete && !(admin)">
+<div class="pt-5 mt-3 animated fadeIn" *ngIf="futureComplete && !(admin)">
     <h1>No Access</h1>
 </div>
-<div class="pt-5 mt-3" *ngIf="futureComplete && (admin)" width="100%">
+<div class="pt-5 mt-3 animated fadeIn" *ngIf="futureComplete && (admin)">
     <!--PKT Table-->
-    <div class="limiter" *ngIf="currUser['pktVendor'] == 'PKT'">
-        <div class="container-table100">
-            <div class="table100 ver1 m-b-11">
-                <div class="table100-head">
-                    <table>
-                        <thead>
-                        <tr class="row100 head">
-                            <th class="cell100 column1">Ticket</th>
-                            <th class="cell100 column2">WSID</th>
-                            <th class="cell100 column3">Lokasi</th>
-                            <th class="cell100 column4">SN</th>
-                            <th class="cell100 column5">Vendor</th>
-                            <th class="cell100 column6">Waktu</th>
-                            <th class="cell100 column7">Masalah</th>
-                            <th class="cell100 column8">Status</th>
-                            <th class="cell100 column9">Aksi</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="table100-body js-pscroll">
-                    <table>
-                        <tbody>
-                        <tr class="row100 body" *ngFor="let job of jobList">
-                                <td class="cell100 column1" *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
-                                    {{job.data()["ticketNum"].toString()}}
-                                </td>
-                                <td class="cell100 column2" *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
-                                    {{job.data()["wsid"].toString()}}
-                                </td>
-                                <td class="cell100 column3" *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
-                                    {{job.data()["location"].toString()}}
-                                </td>
-                                <td class="cell100 column4" *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
-                                    {{job.data()["serialNum"].toString()}}
-                                </td>
-                                <td class="cell100 column5" *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
-                                    {{job.data()["vendorName"].toString()}}
-                                </td>
-                                <td class="cell100 column6" *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
-                                    {{job.data()["startDatetime"]|date:'dd MMMM yyyy'}}
-                                </td>
-                                <td class="cell100 column7" *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
-                                    {{job.data()["problemDesc"].toString()}}
-                                </td>
-                                <td class="cell100 column8" *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
-                                    {{job.data()["status"].toString()}}
-                                </td>
-                                <td class="cell100 column9" *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
-                                    <div class="fab">
-                                        <material-fab mini title="Assign"
-                                                      *ngIf="job.data()['status'] =='PENDING' || job.data()['status'] =='DECLINED'"
-                                                      [routerLink]="jobUrl(job.data()['ticketNum'])"
-                                                      [routerLinkActive]="'active'">
-                                            <material-icon mini raised icon="motorcycle"></material-icon>
-                                        </material-fab>
-                                        <material-fab mini title="Delete"
-                                                      *ngIf="job.data()['isManual'].toString() =='true'"
-                                                      (trigger)="deleteManualJob(job.data()['ticketNum'])">
-                                            <material-icon icon="delete"></material-icon>
-                                        </material-fab>
-                                        <material-fab mini title="Approve" *ngIf="job.data()['status'] =='NEED HELP'">
-                                            <material-icon icon="person_add"></material-icon>
-                                        </material-fab>
-                                        <material-fab mini title="History Machine">
-                                            <material-icon icon="history"></material-icon>
-                                        </material-fab>
-                                    </div>
-                                </td>
-                        </tr>
-                        </tbody>
-                    </table>
+    <div *ngIf="currUser['pktVendor'] == 'PKT'">
+        <div class="col-10 w-100 m-auto">
+            <table class="table table-inverse table-striped rounded">
+                <thead>
+                <tr>
+                    <th class="text-center" scope="col">Ticket</th>
+                    <th class="text-center" scope="col">WSID</th>
+                    <th class="text-center" scope="col">Lokasi</th>
+                    <th class="text-center" scope="col">SN</th>
+                    <th class="text-center" scope="col">Vendor</th>
+                    <th class="text-center" scope="col">Waktu</th>
+                    <th class="text-center" scope="col">Masalah</th>
+                    <th class="text-center" scope="col">Status</th>
+                    <th class="text-center" scope="col">Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let job of jobList">
+                    <td class="text-center"
+                            *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
+                        {{job.data()["ticketNum"].toString()}}
+                    </td>
+                    <td class="text-center"
+                            *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
+                        {{job.data()["wsid"].toString()}}
+                    </td>
+                    <td class="text-center"
+                            *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
+                        {{job.data()["location"].toString()}}
+                    </td>
+                    <td class="text-center"
+                            *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
+                        {{job.data()["serialNum"].toString()}}
+                    </td>
+                    <td class="text-center"
+                            *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
+                        {{job.data()["vendorName"].toString()}}
+                    </td>
+                    <td class="text-center"
+                            *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
+                        {{job.data()["startDatetime"]|date:'dd MMMM yyyy'}}
+                    </td>
+                    <td class="text-center"
+                            *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
+                        {{job.data()["problemDesc"].toString()}}
+                    </td>
+                    <td class="text-center"
+                            *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
+                        {{job.data()["status"].toString()}}
+                    </td>
+                    <td class="text-center"
+                            *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] !='FINISHED'">
+
+                            <material-fab mini title="Assign"
+                                          *ngIf="job.data()['status'] =='PENDING' || job.data()['status'] =='DECLINED' || job.data()['status'] == 'NOT ACCEPTED'"
+                                          [routerLink]="jobUrl(job.data()['ticketNum'])"
+                                          [routerLinkActive]="'active'">
+                                <material-icon mini raised icon="motorcycle"></material-icon>
+                            </material-fab>
+                            <material-fab mini title="Delete"
+                                          *ngIf="job.data()['isManual'].toString() =='true' && job.data()['status'] != 'DELETED'"
+                                          data-toggle="modal"
+                                          data-target="#deleteManual"
+                                          (trigger)="deleteManualJob(job.data()['ticketNum'])">
+                                <material-icon icon="delete"></material-icon>
+                            </material-fab>
+                            <material-fab mini title="Approve" *ngIf="job.data()['status'] =='NEED HELP'">
+                                <material-icon icon="person_add"></material-icon>
+                            </material-fab>
+                            <material-fab mini title="History Machine">
+                                <material-icon icon="history"></material-icon>
+                            </material-fab>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--modal-->
+        <div class="modal fade" id="deleteManual" tabindex="-1" role="dialog" aria-labelledby="modalLabel"  aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">
+                            Delete Sukses!
+                        </h5>
+
+                        <button (click)="reload()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        Job manual berhasil di delete!
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="reload()" [routerLink]="RoutePaths.dashboard.toUrl()" [routerLinkActive]="'active'">Kembali</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <!--endModal-->
     </div>
-    <!--END PKT TABLE-->
-    <!--VENDOR TABLE-->
 
-    <!--END VENDOR TABLE-->
-    <!--AOC TABLE-->
+        <!--END PKT TABLE-->
 
-    <!--END AOC TABLE-->
+        <!--VENDOR TABLE-->
+        <div *ngIf="currUser['pktVendor'] == 'Vendor'">
+            <!--TODO-->
+        </div>
+        <!--END VENDOR TABLE-->
+
+        <!--AOC TABLE-->
+
+        <!--END AOC TABLE-->
 </div>

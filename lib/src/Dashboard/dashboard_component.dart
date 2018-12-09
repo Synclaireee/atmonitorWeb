@@ -18,11 +18,8 @@ import '../routes.dart';
   selector: 'dashboard',
   styleUrls: [
     '../util/util.css',
-    '../util/animate.css',
-    '../util/table.css',
-    '../util/perfect-scrollbar.css',
     '../util/bootstrap.min.css',
-    '../util/select2.min.css'
+    '../util/animate.css'
   ],
   templateUrl: 'dashboard_component.html',
   directives: [
@@ -35,18 +32,21 @@ import '../routes.dart';
   pipes: [commonPipes],
   exports: [RoutePaths, Routes],
 )
-
-class DashboardComponent implements OnInit{
-
+class DashboardComponent implements OnInit, OnDestroy {
+  Router _route;
   List<DocumentSnapshot> jobList;
   Firestore db = fb.firestore();
   bool admin;
   bool futureComplete = false;
+  Timer _try;
+
+  DashboardComponent(this._route);
+
   @override
   void ngOnInit() {
-    // TODO: implement ngOnInit
-      getJobs();
-      getCurrUser();
+    getJobs();
+    getCurrUser();
+    autoReload();
   }
 
   bool isAuthenticated() => fb.auth().currentUser != null;
@@ -57,36 +57,46 @@ class DashboardComponent implements OnInit{
 
   String get uid => fb.auth().currentUser?.uid;
 
-  Map<String,dynamic> currUser;
+  Map<String, dynamic> currUser;
 
   // If the provider gave us an access token, we put it here.
   String providerAccessToken = "";
+
   //get all Job List
   getJobs() {
     CollectionReference ref = db.collection("jobs");
-    ref.get().then((snapshot) {
+    ref
+        .orderBy("status", "desc")
+        .orderBy("startDatetime", "desc")
+        .get()
+        .then((snapshot) {
       jobList = snapshot.docs;
     });
     print(jobList);
   }
 
+  //sortJobs
+  sortJobs() {
+    jobList.sort();
+  }
+
   //is currUser admin?
   isAdmin() {
-      String role = currUser['role'];
-      String temp = role.substring(0, role.indexOf(" "));
-      if (temp == "Admin") {
-        print(role);
-        admin =  true;
-      } else {
-        admin = false;
-      }
+    String role = currUser['role'];
+    String temp = role.substring(0, role.indexOf(" "));
+    if (temp == "Admin") {
+      print(role);
+      admin = true;
+    } else {
+      admin = false;
+    }
   }
 
   //getUser and Admin
   getCurrUser() {
-    db.collection("users").where("uid","==",uid).get().then((snapshot){
+    db.collection("users").where("uid", "==", uid).get().then((snapshot) {
       currUser = snapshot.docs.first.data();
-    }).whenComplete((){
+    }).whenComplete(() {
       isAdmin();
       futureComplete = true;
     });
@@ -94,24 +104,39 @@ class DashboardComponent implements OnInit{
 
   //delManualJob
   deleteManualJob(String ticketNum) {
-    Firestore db = fb.firestore();
-    Query ref =
-    db.collection("jobs").where("ticketNum", "==", ticketNum);
+    Query ref = db.collection("jobs").where("ticketNum", "==", ticketNum);
     ref.get().then((snapshot) {
       db.runTransaction((Transaction transaction) async {
         DocumentSnapshot documentSnapshot =
-        await transaction.get(snapshot.docs.first.ref);
+            await transaction.get(snapshot.docs.first.ref);
 
         await transaction
             .update(documentSnapshot.ref, data: {"status": "DELETED"});
-
       });
     });
   }
 
   //generateJobUrl
-  String jobUrl(String para){
+  String jobUrl(String para) {
     return RoutePaths.assignTo.toUrl(parameters: {jobId: '$para'});
   }
 
+  //force Reload
+  reload() {
+    _route.navigate(RoutePaths.dashboard.toUrl(),
+        NavigationParams(reload: true, replace: true));
+  }
+
+  autoReload() {
+    _try = Timer(Duration(seconds: 30), reload);
+  }
+
+  @override
+  void ngOnDestroy() {
+    // cancel Future
+    if (_try != null) {
+      _try.cancel();
+      _try = null;
+    }
+  }
 }

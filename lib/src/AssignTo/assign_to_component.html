@@ -1,9 +1,148 @@
-<div class="pt-5 mt-3">
-    <div class="text-center text-dark">
-        <h3>Assign Technician</h3>
-        <div>
-            {{currJob}} <br>
-            {{currUser}}
+<div class="pt-5 mt-3 text-center text-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-10 m-auto">
+                <h3 class="animated fadeIn">Assign Teknisi</h3>
+                <!--Job Detail-->
+                <div class="card bg-light mt-3 animated fadeIn delay-1s">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>Detail Pekerjaan</h4>
+                        </div>
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Ticket Number</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['ticketNum']}}
+                                </div>
+
+                                <div class="w-100"></div>
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">WSID</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['wsid']}}
+                                </div>
+
+                                <div class="w-100"></div>
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Lokasi</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['location']}}
+                                </div>
+
+                                <div class="w-100"></div>
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">SN</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['serialNum']}}
+                                </div>
+
+                                <div class="w-100"></div>
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Waktu</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['startDatetime'] | date:'dd MMMM yyyy'}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Masalah</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['problemDesc']}}
+                                </div>
+
+                                <div class="w-100"></div>
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Teknisi PKT</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    <div *ngIf="currJob['assignedTo'] == null">
+                                        -
+                                    </div>
+                                    <div *ngIf="currJob['assignedTo'] != null">
+                                        {{techName}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <!--technician-->
+                <div class="card bg-light mt-3 animated fadeIn delay-2s">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>List Teknisi</h4>
+                        </div>
+
+                        <!--search-->
+
+                        <div class="form-group col-6 m-auto">
+                            <input id="searchTechnician" type="text" class="form-control" placeholder="Search...">
+                        </div>
+
+                        <!--list-->
+
+                        <div class="m-auto text-left">
+                            <div *ngFor="let tech of listTechnician" class="col-10 pt-4">
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-5 bg-dark rounded text-light pt-1">
+                                        <span>{{tech['name']}}</span>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" data-toggle="modal" data-target="#successAssign" class="btn btn-sm btn-secondary" (click)="assignJob(tech['uid'])">Assign
+                                        </button>
+                                    </div>
+
+                                    <div class="w-100"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--modal-->
+                        <div class="modal fade" id="successAssign" tabindex="-1" role="dialog" aria-labelledby="modalLabel"  aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalLabel">
+                                            Assign Sukses!
+                                        </h5>
+
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        Teknisi berhasil di assign!
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="RoutePaths.dashboard.toUrl()" [routerLinkActive]="'active'">Kembali</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--endModal-->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
