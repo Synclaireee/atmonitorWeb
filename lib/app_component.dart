@@ -21,6 +21,7 @@ import 'src/route_paths.dart';
     'app_component.css',
     'src/util/util.css',
     'src/util/bootstrap.min.css',
+    'src/util/animate.css'
   ],
   templateUrl: 'app_component.html',
   directives: [
@@ -44,13 +45,48 @@ class AppComponent implements OnInit {
 
   String get uName => fb.auth().currentUser?.displayName;
 
-  Map<String, dynamic> get userJson => fb.auth().currentUser?.toJson();
+  Map<String, dynamic> currUser = new Map<String,dynamic>();
 
   Router _route;
+
+  bool futureComplete = false;
+  bool admin = false;
   AppComponent(this._route);
 
   @override
   void ngOnInit() {
+    waitingAuth();
+  }
+
+  //waitingAuth
+  waitingAuth(){
+    fb.auth().onAuthStateChanged.listen((user) {
+      if(user!=null){
+        getCurrUser();
+      }
+    });
+  }
+
+  //getCurrUser
+  getCurrUser() {
+    db.collection("users").where("uid", "==", uid).get().then((snapshot) {
+      currUser = snapshot.docs.first.data();
+    }).whenComplete(() {
+      isAdmin();
+      futureComplete = true;
+    });
+  }
+
+  //Admin
+  isAdmin() {
+    String role = currUser['role'];
+    String temp = role.substring(0, role.indexOf(" "));
+    if (temp == "Admin") {
+      print(role);
+      admin = true;
+    } else {
+      admin = false;
+    }
   }
 
   PromiseJsImpl<void> signInFailure(AuthUIError authUiError) {

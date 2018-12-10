@@ -78,6 +78,22 @@
                                     </div>
                                 </div>
 
+                                <!--addInfoVendor-->
+                                <div *ngIf="currUser['pktVendor'] == 'Vendor'">
+                                    <div class="w-100"></div>
+
+                                    <div class="col-2"></div>
+                                    <div class="col-2 text-left">Teknisi Vendor</div>
+                                    <div class="col-auto">:</div>
+                                    <div class="col text-left">
+                                        <div *ngIf="currJob['vAssignedTo'] == null">
+                                            -
+                                        </div>
+                                        <div *ngIf="currJob['vAssignedTo'] != null">
+                                            {{vTechName}}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -96,9 +112,39 @@
                             <input id="searchTechnician" type="text" class="form-control" placeholder="Search...">
                         </div>
 
-                        <!--list-->
 
-                        <div class="m-auto text-left">
+                        <!--list PKT-->
+
+                        <div class="m-auto text-left" *ngIf="currUser['pktVendor'] == 'PKT' ">
+                            <div *ngFor="let tech of listTechnician" class="col-10 pt-4">
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-5 bg-dark rounded text-light pt-1">
+                                        <span>{{tech['name']}}</span>
+                                    </div>
+
+                                    <!--PKT non Helper-->
+                                    <div class="col" *ngIf="currJob['confirmHelpTime'] == null">
+                                        <button type="button" data-toggle="modal" data-target="#successAssign"
+                                                class="btn btn-sm btn-secondary" (click)="assignJob(tech['uid'])">Assign
+                                        </button>
+                                    </div>
+
+                                    <!--PKT HELPER-->
+                                    <div class="col" *ngIf="currJob['needHelpTime'] != null">
+                                        <button type="button" data-toggle="modal" data-target="#successAssign"
+                                                class="btn btn-sm btn-secondary" (click)="hAssignJob(tech['uid'])">
+                                            Assign
+                                        </button>
+                                    </div>
+                                    <div class="w-100"></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--list Vendor-->
+                        <div class="m-auto text-left" *ngIf="currUser['pktVendor'] == 'Vendor'">
                             <div *ngFor="let tech of listTechnician" class="col-10 pt-4">
                                 <div class="row">
                                     <div class="col-3"></div>
@@ -106,7 +152,9 @@
                                         <span>{{tech['name']}}</span>
                                     </div>
                                     <div class="col">
-                                        <button type="button" data-toggle="modal" data-target="#successAssign" class="btn btn-sm btn-secondary" (click)="assignJob(tech['uid'])">Assign
+                                        <button type="button" data-toggle="modal" data-target="#successAssign"
+                                                class="btn btn-sm btn-secondary" (click)="vAssignJob(tech['uid'])">
+                                            Assign
                                         </button>
                                     </div>
 
@@ -115,8 +163,11 @@
                                 </div>
                             </div>
                         </div>
+
+
                         <!--modal-->
-                        <div class="modal fade" id="successAssign" tabindex="-1" role="dialog" aria-labelledby="modalLabel"  aria-hidden="true">
+                        <div class="modal fade" id="successAssign" tabindex="-1" role="dialog"
+                             aria-labelledby="modalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -134,7 +185,10 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="RoutePaths.dashboard.toUrl()" [routerLinkActive]="'active'">Kembali</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                [routerLink]="RoutePaths.dashboard.toUrl()"
+                                                [routerLinkActive]="'active'">Kembali
+                                        </button>
                                     </div>
                                 </div>
                             </div>

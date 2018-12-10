@@ -8,20 +8,17 @@ import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart';
 import 'package:firebase_dart_ui/firebase_dart_ui.dart';
 
-import 'package:firebase/src/interop/firebase_interop.dart';
 import '../routes.dart';
 
-// AngularDart info: https://webdev.dartlang.org/angular
-// Components info: https://webdev.dartlang.org/components
 
 @Component(
-  selector: 'dashboard',
+  selector: 'needHelp',
   styleUrls: [
     '../util/util.css',
     '../util/bootstrap.min.css',
     '../util/animate.css'
   ],
-  templateUrl: 'dashboard_component.html',
+  templateUrl: 'need_help_component.html',
   directives: [
     coreDirectives,
     FirebaseAuthUIComponent,
@@ -32,7 +29,7 @@ import '../routes.dart';
   pipes: [commonPipes],
   exports: [RoutePaths, Routes],
 )
-class DashboardComponent implements OnInit, OnDestroy {
+class NeedHelpComponent implements OnInit, OnDestroy {
   Router _route;
   List<DocumentSnapshot> jobList;
   Firestore db = fb.firestore();
@@ -40,7 +37,7 @@ class DashboardComponent implements OnInit, OnDestroy {
   bool futureComplete = false;
   Timer _auto;
 
-  DashboardComponent(this._route);
+  NeedHelpComponent(this._route);
 
   @override
   void ngOnInit() {
@@ -63,25 +60,14 @@ class DashboardComponent implements OnInit, OnDestroy {
 
   //get all Job List
   getJobs() {
-    if(currUser['pktVendor'] == "PKT") {
-      CollectionReference ref = db.collection("jobs");
-      ref
-          .orderBy("status", "desc")
-          .orderBy("startDatetime", "asc")
-          .get()
-          .then((snapshot) {
-        jobList = snapshot.docs;
-      });
-    } else{
-      CollectionReference ref = db.collection("jobs");
-      ref
-          .orderBy("vStatus", "desc")
-          .orderBy("confirmHelpTime", "asc")
-          .get()
-          .then((snapshot) {
-        jobList = snapshot.docs;
-      });
-    }
+    CollectionReference ref = db.collection("jobs");
+    ref
+        .orderBy("status", "desc")
+        .orderBy("startDatetime", "asc")
+        .get()
+        .then((snapshot) {
+      jobList = snapshot.docs;
+    });
   }
 
   //is currUser admin?
@@ -103,22 +89,8 @@ class DashboardComponent implements OnInit, OnDestroy {
     }).whenComplete(() {
       isAdmin();
       futureComplete = true;
-    }).then((_){
+    }).then((_) {
       getJobs();
-    });
-  }
-
-  //delManualJob
-  deleteManualJob(String ticketNum) {
-    Query ref = db.collection("jobs").where("ticketNum", "==", ticketNum);
-    ref.get().then((snapshot) {
-      db.runTransaction((Transaction transaction) async {
-        DocumentSnapshot documentSnapshot =
-            await transaction.get(snapshot.docs.first.ref);
-
-        await transaction
-            .update(documentSnapshot.ref, data: {"status": "DELETED"});
-      });
     });
   }
 
@@ -129,7 +101,7 @@ class DashboardComponent implements OnInit, OnDestroy {
 
   //force Reload
   reload() {
-    _route.navigate(RoutePaths.dashboard.toUrl(),
+    _route.navigate(RoutePaths.needHelp.toUrl(),
         NavigationParams(reload: true, replace: true));
   }
 
@@ -140,24 +112,10 @@ class DashboardComponent implements OnInit, OnDestroy {
   @override
   void ngOnDestroy() {
     // cancel Future
+    // TODO ganti try
     if (_auto != null) {
       _auto.cancel();
       _auto = null;
     }
-  }
-
-
-  //helpApprove
-  helpApprove(String ticketNum) {
-    Query ref = db.collection("jobs").where("ticketNum", "==", ticketNum);
-    ref.get().then((snapshot) {
-      db.runTransaction((Transaction transaction) async {
-        DocumentSnapshot documentSnapshot =
-        await transaction.get(snapshot.docs.first.ref);
-
-        await transaction
-            .update(documentSnapshot.ref, data: {"status": "PENDING" , "vStatus" : "vPENDING", "confirmHelpTime": DateTime.now()});
-      });
-    });
   }
 }
