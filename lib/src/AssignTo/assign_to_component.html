@@ -51,7 +51,7 @@
                                 <div class="col-2 text-left">Waktu</div>
                                 <div class="col-auto">:</div>
                                 <div class="col text-left">
-                                    {{currJob['startDatetime'] | date:'dd MMMM yyyy'}}
+                                    {{currJob["startDatetime"]|date:'dd MMMM y HH:mm:ss'}}
                                 </div>
 
 
@@ -78,20 +78,19 @@
                                     </div>
                                 </div>
 
-                                <!--addInfoVendor-->
-                                <div *ngIf="currUser['pktVendor'] == 'Vendor'">
-                                    <div class="w-100"></div>
+                                <div class="w-100"></div>
 
-                                    <div class="col-2"></div>
-                                    <div class="col-2 text-left">Teknisi Vendor</div>
-                                    <div class="col-auto">:</div>
-                                    <div class="col text-left">
-                                        <div *ngIf="currJob['vAssignedTo'] == null">
-                                            -
-                                        </div>
-                                        <div *ngIf="currJob['vAssignedTo'] != null">
-                                            {{vTechName}}
-                                        </div>
+                                <!--addInfoVendor-->
+                                <div class="col-2" *ngIf="currUser['pktVendor'] == 'Vendor'"></div>
+                                <div class="col-2 text-left" *ngIf="currUser['pktVendor'] == 'Vendor'">Teknisi Vendor
+                                </div>
+                                <div class="col-auto" *ngIf="currUser['pktVendor'] == 'Vendor'">:</div>
+                                <div class="col text-left" *ngIf="currUser['pktVendor'] == 'Vendor'">
+                                    <div *ngIf="currJob['vAssignedTo'] == null">
+                                        -
+                                    </div>
+                                    <div *ngIf="currJob['vAssignedTo'] != null">
+                                        {{vTechName}}
                                     </div>
                                 </div>
                             </div>
@@ -185,8 +184,16 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        <!--PKT + Vendor-->
+                                        <button *ngIf="currJob['needHelpTime'] == null || currUser['pktVendor'] == 'Vendor'" type="button"
+                                                class="btn btn-secondary" data-dismiss="modal"
                                                 [routerLink]="RoutePaths.dashboard.toUrl()"
+                                                [routerLinkActive]="'active'">Kembali
+                                        </button>
+                                        <!--Helper-->
+                                        <button *ngIf="currJob['needHelpTime'] != null" type="button"
+                                                class="btn btn-secondary" data-dismiss="modal"
+                                                [routerLink]="RoutePaths.needHelp.toUrl()"
                                                 [routerLinkActive]="'active'">Kembali
                                         </button>
                                     </div>

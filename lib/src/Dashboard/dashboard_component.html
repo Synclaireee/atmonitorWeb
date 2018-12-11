@@ -43,7 +43,7 @@
                     </td>
                     <td class="text-center align-middle"
                         *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['confirmHelpTime'] == null && job.data()['status'] !='FINISHED'">
-                        {{job.data()["startDatetime"]|date:'dd MMMM yyyy'}}
+                        {{job.data()["startDatetime"]|date:'dd MMMM y HH:mm:ss'}}
                     </td>
                     <td class="text-center align-middle"
                         *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['confirmHelpTime'] == null && job.data()['status'] !='FINISHED'">
@@ -191,7 +191,7 @@
                     </td>
                     <td class="text-center align-middle"
                         *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
-                        {{job.data()["confirmHelpTime"]|date:'dd MMMM yyyy'}}
+                        {{job.data()["confirmHelpTime"]|date:'dd MMMM y HH:mm:ss'}}
                     </td>
                     <td class="text-center align-middle"
                         *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">

@@ -45,6 +45,8 @@ class AppComponent implements OnInit {
 
   String get uName => fb.auth().currentUser?.displayName;
 
+  String pktVendorName;
+
   Map<String, dynamic> currUser = new Map<String,dynamic>();
 
   Router _route;
@@ -73,6 +75,7 @@ class AppComponent implements OnInit {
       currUser = snapshot.docs.first.data();
     }).whenComplete(() {
       isAdmin();
+      pktVenName();
       futureComplete = true;
     });
   }
@@ -89,6 +92,15 @@ class AppComponent implements OnInit {
     }
   }
 
+  //getCurrUser pktVendorName
+  pktVenName(){
+    db.collection("pktVendors").where("pktVendorId", "==", currUser['pktVendorId']).get().then((snapshot){
+      pktVendorName = snapshot.docs.first.data()['pktVendorName'];
+    });
+  }
+
+
+  //firebase ui
   PromiseJsImpl<void> signInFailure(AuthUIError authUiError) {
     // nothing to do;
     return new PromiseJsImpl<void>(() => print("SignIn Failure"));
@@ -136,4 +148,5 @@ class AppComponent implements OnInit {
     await fb.auth().signOut();
     providerAccessToken = "";
   }
+
 }
