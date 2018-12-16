@@ -125,4 +125,10 @@ class FinishedDashboardComponent implements OnInit, OnDestroy {
       _auto = null;
     }
   }
+
+
+  //detail
+  String detailUrl(String para) {
+    return RoutePaths.detailDashboard.toUrl(parameters: {jobId: '$para'});
+  }
 }

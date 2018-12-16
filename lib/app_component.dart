@@ -21,7 +21,7 @@ import 'src/route_paths.dart';
     'app_component.css',
     'src/util/util.css',
     'src/util/bootstrap.min.css',
-    'src/util/animate.css'
+    'src/util/animate.css',
   ],
   templateUrl: 'app_component.html',
   directives: [

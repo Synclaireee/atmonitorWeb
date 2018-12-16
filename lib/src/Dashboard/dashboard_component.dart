@@ -160,4 +160,9 @@ class DashboardComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+  //detail
+  String detailUrl(String para) {
+    return RoutePaths.detailDashboard.toUrl(parameters: {jobId: '$para'});
+  }
 }

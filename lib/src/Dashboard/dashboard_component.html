@@ -2,8 +2,13 @@
     <!--PKT Table-->
     <div *ngIf="currUser['pktVendor'] == 'PKT'">
         <div class="col-10 w-100 m-auto">
-            <div class="text-right animated fadeIn">
-                <button class="btn btn-dark mb-2 rounded" (click)="reload()">Refresh</button>
+            <div>
+                <div class="animated fadeIn d-inline float-left">
+                    <button class="btn btn-dark mb-2 rounded" [routerLink]='RoutePaths.manualTicket.toUrl()' [routerLinkActive]="'active'">Tambah Manual</button>
+                </div>
+                <div class="animated fadeIn d-inline float-right">
+                    <button class="btn btn-dark mb-2 rounded" (click)="reload()">Refresh</button>
+                </div>
             </div>
             <table class="table table-inverse">
                 <thead>
@@ -59,7 +64,7 @@
                         <!--besides NOT ACCEPTED-->
                         <material-fab mini title="Assign"
                                       *ngIf="job.data()['status'] =='PENDING' || job.data()['status'] =='DECLINED'"
-                                      (trigger)="jobUrl(job.data()['ticketNum'])"
+                                      [routerLink]="jobUrl(job.data()['ticketNum'])"
                                       [routerLinkActive]="'active'">
                             <material-icon mini raised icon="motorcycle"></material-icon>
                         </material-fab>
@@ -68,9 +73,8 @@
 
                         <material-fab mini title="Assigned"
                                       *ngIf="job.data()['status'] == 'NOT ACCEPTED'"
-                                      (trigger)="jobUrl(job.data()['ticketNum'])"
                                       [routerLinkActive]="'active'"
-                                      [disabled] ="true">
+                                      [disabled]="true">
                             <material-icon mini raised icon="motorcycle"></material-icon>
                         </material-fab>
 
@@ -79,6 +83,8 @@
                                       *ngIf="job.data()['isManual'].toString() =='true' && job.data()['status'] != 'DELETED'"
                                       data-toggle="modal"
                                       data-target="#deleteManual"
+                                      data-backdrop="static"
+                                      data-keyboard="false"
                                       (trigger)="deleteManualJob(job.data()['ticketNum'])">
                             <material-icon icon="delete"></material-icon>
                         </material-fab>
@@ -86,9 +92,17 @@
                                       *ngIf="job.data()['status'] == 'NEED HELP'"
                                       data-toggle="modal"
                                       data-target="#helpApprove"
+                                      data-backdrop="static"
+                                      data-keyboard="false"
                                       (trigger)="helpApprove(job.data()['ticketNum'])">
                             <material-icon icon="person_add"></material-icon>
                         </material-fab>
+
+                        <material-fab mini title="Detail Job"
+                                      [routerLink]="detailUrl(job.data()['ticketNum'])">
+                            <material-icon icon="assignment"></material-icon>
+                        </material-fab>
+
                         <material-fab mini title="History Machine">
                             <material-icon icon="history"></material-icon>
                         </material-fab>
@@ -165,8 +179,7 @@
     <div *ngIf="currUser['pktVendor'] == 'Vendor'">
         <!--TODO-->
         <div class="col-10 w-100 m-auto">
-
-            <div class="text-right animated fadeIn">
+            <div class="float-right animated fadeIn">
                 <button class="btn btn-dark mb-2 rounded" (click)="reload()">Refresh</button>
             </div>
 
@@ -179,47 +192,52 @@
                     <th class="text-center align-middle" scope="col">SN</th>
                     <th class="text-center align-middle" scope="col">Waktu Permintaan Bantuan</th>
                     <th class="text-center align-middle" scope="col">Masalah</th>
-                    <th class="text-center align-middle" scope="col">Solusi yang Telah Dicoba</th>
-                    <th class="text-center align-middle" scope="col">Status</th>
+                    <th class="text-center align-middle" scope="col">Solusi Yg Dicoba</th>
+                    <th class="text-center align-middle" scope="col">Status PKT</th>
+                    <th class="text-center align-middle" scope="col">Status Vendor</th>
                     <th class="text-center align-middle" scope="col">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let job of jobList">
                     <td class="text-center align-middle"
-                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
                         {{job.data()["ticketNum"].toString()}}
                     </td>
                     <td class="text-center align-middle"
-                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
                         {{job.data()["wsid"].toString()}}
                     </td>
                     <td class="text-center align-middle"
-                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
                         {{job.data()["location"].toString()}}
                     </td>
                     <td class="text-center align-middle"
-                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
                         {{job.data()["serialNum"].toString()}}
                     </td>
                     <td class="text-center align-middle"
-                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
                         {{job.data()["confirmHelpTime"]|date:'dd MMMM y HH:mm:ss'}}
                     </td>
                     <td class="text-center align-middle"
-                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
                         {{job.data()["problemDesc"].toString()}}
                     </td>
                     <td class="text-center align-middle"
-                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
                         {{job.data()["triedSolution"].toString()}}
                     </td>
                     <td class="text-center align-middle"
-                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
+                        {{job.data()["status"]}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
                         {{job.data()["vStatus"].toString().substring(1,job.data()["vStatus"].toString().length)}}
                     </td>
                     <td class="text-center align-middle"
-                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] !='vFINISHED'">
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
 
                         <material-fab mini title="Assign"
                                       *ngIf="job.data()['vStatus'] == 'vPENDING' || job.data()['vStatus'] =='vDECLINED' || job.data()['vStatus'] == 'vNOT ACCEPTED'"
@@ -227,6 +245,12 @@
                                       [routerLinkActive]="'active'">
                             <material-icon mini raised icon="motorcycle"></material-icon>
                         </material-fab>
+
+                        <material-fab mini title="Detail Job"
+                                      [routerLink]="detailUrl(job.data()['ticketNum'])">
+                            <material-icon icon="assignment"></material-icon>
+                        </material-fab>
+
                         <material-fab mini title="History Machine">
                             <material-icon icon="history"></material-icon>
                         </material-fab>

@@ -125,6 +125,8 @@
                                     <!--PKT non Helper-->
                                     <div class="col" *ngIf="currJob['confirmHelpTime'] == null">
                                         <button type="button" data-toggle="modal" data-target="#successAssign"
+                                                data-backdrop="static"
+                                                data-keyboard="false"
                                                 class="btn btn-sm btn-secondary" (click)="assignJob(tech['uid'])">Assign
                                         </button>
                                     </div>
@@ -132,6 +134,8 @@
                                     <!--PKT HELPER-->
                                     <div class="col" *ngIf="currJob['needHelpTime'] != null">
                                         <button type="button" data-toggle="modal" data-target="#successAssign"
+                                                data-backdrop="static"
+                                                data-keyboard="false"
                                                 class="btn btn-sm btn-secondary" (click)="hAssignJob(tech['uid'])">
                                             Assign
                                         </button>
@@ -152,6 +156,8 @@
                                     </div>
                                     <div class="col">
                                         <button type="button" data-toggle="modal" data-target="#successAssign"
+                                                data-backdrop="static"
+                                                data-keyboard="false"
                                                 class="btn btn-sm btn-secondary" (click)="vAssignJob(tech['uid'])">
                                             Assign
                                         </button>
@@ -185,7 +191,8 @@
 
                                     <div class="modal-footer">
                                         <!--PKT + Vendor-->
-                                        <button *ngIf="currJob['needHelpTime'] == null || currUser['pktVendor'] == 'Vendor'" type="button"
+                                        <button *ngIf="currJob['needHelpTime'] == null || currUser['pktVendor'] == 'Vendor'"
+                                                type="button"
                                                 class="btn btn-secondary" data-dismiss="modal"
                                                 [routerLink]="RoutePaths.dashboard.toUrl()"
                                                 [routerLinkActive]="'active'">Kembali

@@ -1,0 +1,229 @@
+<div class="pt-5 mt-3 text-center text-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-10 m-auto">
+                <!--Job Detail-->
+                <div class="card bg-light mt-3 animated fadeIn delay-1s">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>Detail Pekerjaan</h4>
+                        </div>
+                        <div class="card-text">
+                            <div class="row">
+                                <!--row-->
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Ticket Number</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['ticketNum']}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">WSID</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['wsid']}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Lokasi</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['location']}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">SN</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['serialNum']}}
+                                </div>
+
+                                <div class="w-100"></div>
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Waktu</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob["startDatetime"]|date:'dd MMMM y HH:mm:ss'}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Masalah</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['problemDesc']}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Teknisi PKT</div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    <div *ngIf="currJob['assignedTo'] == null || currJob['hAssignedTime'] == null || currJob['status'] == 'DECLINED'">
+                                        -
+                                    </div>
+                                    <div *ngIf="currJob['assignedTo'] != null && currJob['status'] != 'DECLINED' && (currJob['confirmHelpTime'] == null) || currJob['hAssignedTime'] != null">
+                                        {{techName}} - <b>{{currJob['pktName']}}</b>
+                                    </div>
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2" *ngIf="currJob['confirmHelpTime'] != null"></div>
+                                <div class="col-2 text-left" *ngIf="currJob['confirmHelpTime'] != null">Teknisi Vendor
+                                </div>
+                                <div class="col-auto" *ngIf="currJob['confirmHelpTime'] != null">:</div>
+                                <div class="col text-left" *ngIf="currJob['confirmHelpTime'] != null">
+                                    <div *ngIf="currJob['vAssignedTo'] == null || currJob['vStatus'] == 'vDECLINED'">
+                                        -
+                                    </div>
+                                    <div *ngIf="currJob['vAssignedTo'] != null && currJob['vStatus'] != 'vDECLINED'">
+                                        {{vTechName}} - <b>{{currJob['vendorName']}}</b>
+                                    </div>
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2" *ngIf="currJob['needHelpTime'] != null"></div>
+                                <div class="col-2 text-left" *ngIf="currJob['needHelpTime'] != null">Solusi Yg Dicoba
+                                </div>
+                                <div class="col-auto" *ngIf="currJob['needHelpTime'] != null">:</div>
+                                <div class="col text-left" *ngIf="currJob['needHelpTime'] != null">
+                                     {{currJob['triedSolution']}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2" *ngIf="currJob['needHelpTime'] != null"></div>
+                                <div class="col-2 text-left" *ngIf="currJob['needHelpTime'] != null">Kode Problem
+                                </div>
+                                <div class="col-auto" *ngIf="currJob['needHelpTime'] != null">:</div>
+                                <div class="col text-left" *ngIf="currJob['needHelpTime'] != null">
+                                    {{currJob['problemCode']}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2" *ngIf="currJob['needHelpTime'] != null"></div>
+                                <div class="col-2 text-left" *ngIf="currJob['needHelpTime'] != null">Gambar PKT Bantuan
+                                </div>
+                                <div class="col-auto" *ngIf="currJob['needHelpTime'] != null">:</div>
+                                <div class="col text-left" *ngIf="currJob['needHelpTime'] != null">
+                                    <a href="{{currJob['triedImage']}}" target="_blank">Klik disini...</a>
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2"></div>
+                                <div class="col-2 text-left">Status PKT
+                                </div>
+                                <div class="col-auto">:</div>
+                                <div class="col text-left">
+                                    {{currJob['status']}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2" *ngIf="currJob['confirmHelpTime'] != null"></div>
+                                <div class="col-2 text-left" *ngIf="currJob['confirmHelpTime'] != null">Status Vendor
+                                </div>
+                                <div class="col-auto" *ngIf="currJob['confirmHelpTime'] != null">:</div>
+                                <div class="col text-left" *ngIf="currJob['confirmHelpTime'] != null">
+                                    {{currJob["vStatus"].toString().substring(1,currJob["vStatus"].toString().length)}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2" *ngIf="currJob['status'] =='FINISHED'"></div>
+                                <div class="col-2 text-left" *ngIf="currJob['status'] =='FINISHED'"> Solusi PKT
+                                </div>
+                                <div class="col-auto" *ngIf="currJob['status'] =='FINISHED'">:</div>
+                                <div class="col text-left" *ngIf="currJob['status'] =='FINISHED'">
+                                    {{currJob['solution']}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2" *ngIf="currJob['vStatus'] =='vFINISHED'"></div>
+                                <div class="col-2 text-left" *ngIf="currJob['vStatus'] =='vFINISHED'"> Solusi Vendor
+                                </div>
+                                <div class="col-auto" *ngIf="currJob['vStatus'] =='vFINISHED'">:</div>
+                                <div class="col text-left" *ngIf="currJob['vStatus'] =='vFINISHED'">
+                                    {{currJob['vSolution']}}
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2" *ngIf="currJob['status'] =='FINISHED'"></div>
+                                <div class="col-2 text-left" *ngIf="currJob['status'] =='FINISHED'"> Gambar PKT Selesai
+                                </div>
+                                <div class="col-auto" *ngIf="currJob['status'] =='FINISHED'">:</div>
+                                <div class="col text-left" *ngIf="currJob['status'] =='FINISHED'">
+                                    <a href="{{currJob['image']}}" target="_blank">Klik disini...</a>
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+                                <div class="col-2" *ngIf="currJob['vStatus'] =='vFINISHED'"></div>
+                                <div class="col-2 text-left" *ngIf="currJob['vStatus'] =='vFINISHED'"> Gambar Vendor Selesai
+                                </div>
+                                <div class="col-auto" *ngIf="currJob['vStatus'] =='vFINISHED'">:</div>
+                                <div class="col text-left" *ngIf="currJob['vStatus'] =='vFINISHED'">
+                                    <a href="{{currJob['vImage']}}" target="_blank">Klik disini...</a>
+                                </div>
+
+
+                                <div class="w-100"></div>
+
+
+
+                                <!--EndRow-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>

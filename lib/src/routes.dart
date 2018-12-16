@@ -6,6 +6,8 @@ import 'AssignTo/assign_to_component.template.dart' as assign_to_template;
 import 'Dashboard/dashboard_component.template.dart' as dashboard_template;
 import 'NeedHelpDashboard/need_help_component.template.dart' as need_help_template;
 import 'FinishedDashboard/finished_dashboard_component.template.dart' as finished_dashboard_template;
+import 'DetailDashboard/detail_dashboard_component.template.dart' as detail_dashboard_template;
+import 'ManualTicket/manual_ticket_component.template.dart' as manual_ticket_template;
 export 'route_paths.dart';
 
 class Routes {
@@ -24,15 +26,29 @@ class Routes {
     component:  need_help_template.NeedHelpComponentNgFactory,
   );
 
+
+  static final detailDashboard = RouteDefinition(
+    routePath:  RoutePaths.detailDashboard,
+    component:  detail_dashboard_template.DetailDashboardComponentNgFactory
+  );
+
   static final finishedDashboard = RouteDefinition(
     routePath:  RoutePaths.finishedDashboard,
     component:  finished_dashboard_template.FinishedDashboardComponentNgFactory,
   );
+
+  static final manualTicket = RouteDefinition(
+    routePath: RoutePaths.manualTicket,
+    component: manual_ticket_template.ManualTicketComponentNgFactory,
+  );
+
 
   static final all = <RouteDefinition>[
     assignTo,
     dashboard,
     needHelpDashboard,
     finishedDashboard,
+    detailDashboard,
+    manualTicket,
   ];
 }
