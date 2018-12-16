@@ -1,0 +1,138 @@
+<div class="pt-5 mt-3 animated fadeIn" *ngIf="futureComplete && (admin)">
+    <!--PKT Table-->
+    <div *ngIf="currUser['pktVendor'] == 'PKT'">
+        <div class="col-10 w-100 m-auto">
+            <div class="text-right animated fadeIn">
+                <button class="btn btn-dark mb-2 rounded" (click)="reload()">Refresh</button>
+            </div>
+            <table class="table table-inverse">
+                <thead>
+                <tr>
+                    <th class="text-center align-middle" scope="col">Ticket</th>
+                    <th class="text-center align-middle" scope="col">WSID</th>
+                    <th class="text-center align-middle" scope="col">Lokasi</th>
+                    <th class="text-center align-middle" scope="col">SN</th>
+                    <th class="text-center align-middle" scope="col">Vendor</th>
+                    <th class="text-center align-middle" scope="col">Waktu Selesai</th>
+                    <th class="text-center align-middle" scope="col">Masalah</th>
+                    <th class="text-center align-middle" scope="col">Status</th>
+                    <th class="text-center align-middle" scope="col">Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let job of jobList">
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] =='FINISHED'">
+                        {{job.data()["ticketNum"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] =='FINISHED'">
+                        {{job.data()["wsid"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] =='FINISHED'">
+                        {{job.data()["location"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] =='FINISHED'">
+                        {{job.data()["serialNum"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] =='FINISHED'">
+                        {{job.data()["vendorName"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] =='FINISHED'">
+                        {{job.data()["finishedTime"]|date:'dd MMMM y HH:mm:ss'}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] =='FINISHED'">
+                        {{job.data()["problemDesc"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] =='FINISHED'">
+                        {{job.data()["status"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['status'] =='FINISHED'">
+                        <material-fab mini title="History Machine">
+                            <material-icon icon="history"></material-icon>
+                        </material-fab>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--end PKT Table-->
+    <!--Vendor Table-->
+    <div *ngIf="currUser['pktVendor'] == 'Vendor'">
+        <!--TODO-->
+        <div class="col-10 w-100 m-auto">
+
+            <div class="text-right animated fadeIn">
+                <button class="btn btn-dark mb-2 rounded" (click)="reload()">Refresh</button>
+            </div>
+
+            <table class="table table-inverse rounded">
+                <thead>
+                <tr>
+                    <th class="text-center align-middle" scope="col">Ticket</th>
+                    <th class="text-center align-middle" scope="col">WSID</th>
+                    <th class="text-center align-middle" scope="col">Lokasi</th>
+                    <th class="text-center align-middle" scope="col">SN</th>
+                    <th class="text-center align-middle" scope="col">Waktu Selesai</th>
+                    <th class="text-center align-middle" scope="col">Masalah</th>
+                    <th class="text-center align-middle" scope="col">Solusi</th>
+                    <th class="text-center align-middle" scope="col">Status</th>
+                    <th class="text-center align-middle" scope="col">Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let job of jobList">
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] =='vFINISHED'">
+                        {{job.data()["ticketNum"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] =='vFINISHED'">
+                        {{job.data()["wsid"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] =='vFINISHED'">
+                        {{job.data()["location"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] =='vFINISHED'">
+                        {{job.data()["serialNum"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] =='vFINISHED'">
+                        {{job.data()["finishedTime"]|date:'dd MMMM y HH:mm:ss'}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] =='vFINISHED'">
+                        {{job.data()["problemDesc"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] =='vFINISHED'">
+                        {{job.data()["vSolution"].toString()}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] =='vFINISHED'">
+                        {{job.data()["vStatus"].toString().substring(1,job.data()["vStatus"].toString().length)}}
+                    </td>
+                    <td class="text-center align-middle"
+                        *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && job.data()['vStatus'] =='vFINISHED'">
+
+                        <material-fab mini title="History Machine">
+                            <material-icon icon="history"></material-icon>
+                        </material-fab>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--End Vendor Table-->
+</div>

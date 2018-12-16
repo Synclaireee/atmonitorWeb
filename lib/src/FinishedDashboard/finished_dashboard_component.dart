@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:js';
 
 import 'package:angular_router/angular_router.dart';
 import 'package:angular/angular.dart';
@@ -8,20 +7,19 @@ import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart';
 import 'package:firebase_dart_ui/firebase_dart_ui.dart';
 
-import 'package:firebase/src/interop/firebase_interop.dart';
 import '../routes.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
 // Components info: https://webdev.dartlang.org/components
 
 @Component(
-  selector: 'dashboard',
+  selector: 'finishedDashboard',
   styleUrls: [
     '../util/util.css',
     '../util/bootstrap.min.css',
     '../util/animate.css'
   ],
-  templateUrl: 'dashboard_component.html',
+  templateUrl: 'finished_dashboard_component.html',
   directives: [
     coreDirectives,
     FirebaseAuthUIComponent,
@@ -32,7 +30,7 @@ import '../routes.dart';
   pipes: [commonPipes],
   exports: [RoutePaths, Routes],
 )
-class DashboardComponent implements OnInit, OnDestroy {
+class FinishedDashboardComponent implements OnInit, OnDestroy {
   Router _route;
   List<DocumentSnapshot> jobList;
   Firestore db = fb.firestore();
@@ -40,7 +38,7 @@ class DashboardComponent implements OnInit, OnDestroy {
   bool futureComplete = false;
   Timer _auto;
 
-  DashboardComponent(this._route);
+  FinishedDashboardComponent(this._route);
 
   @override
   void ngOnInit() {
@@ -54,12 +52,13 @@ class DashboardComponent implements OnInit, OnDestroy {
 
   Map<String, dynamic> currUser;
 
-//  //Convert uid to Name
-//  getNameFromUid(Future<String> id){
-//     db.collection("users").where("uid","==", id).get().then((snapshot){
-//      return snapshot.docs.first.data()['name'];
-//    });
-//  }
+  //Convert uid to Name
+  getNameFromUid(String id) {
+    db.collection("users").where("uid","==",id).get().then((snapshot){
+      print('test');
+      return snapshot.docs.first.data()['name'];
+    });
+  }
 
   //get all Job List
   getJobs() {
@@ -108,28 +107,9 @@ class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  //delManualJob
-  deleteManualJob(String ticketNum) {
-    Query ref = db.collection("jobs").where("ticketNum", "==", ticketNum);
-    ref.get().then((snapshot) {
-      db.runTransaction((Transaction transaction) async {
-        DocumentSnapshot documentSnapshot =
-            await transaction.get(snapshot.docs.first.ref);
-
-        await transaction
-            .update(documentSnapshot.ref, data: {"status": "DELETED"});
-      });
-    });
-  }
-
-  //generateJobUrl
-  String jobUrl(String para) {
-    return RoutePaths.assignTo.toUrl(parameters: {jobId: '$para'});
-  }
-
   //force Reload
   reload() {
-    _route.navigate(RoutePaths.dashboard.toUrl(),
+    _route.navigate(RoutePaths.finishedDashboard.toUrl(),
         NavigationParams(reload: true, replace: true));
   }
 
@@ -144,20 +124,5 @@ class DashboardComponent implements OnInit, OnDestroy {
       _auto.cancel();
       _auto = null;
     }
-  }
-
-
-  //helpApprove
-  helpApprove(String ticketNum) {
-    Query ref = db.collection("jobs").where("ticketNum", "==", ticketNum);
-    ref.get().then((snapshot) {
-      db.runTransaction((Transaction transaction) async {
-        DocumentSnapshot documentSnapshot =
-        await transaction.get(snapshot.docs.first.ref);
-
-        await transaction
-            .update(documentSnapshot.ref, data: {"status": "PENDING" , "vStatus" : "vPENDING", "confirmHelpTime": DateTime.now()});
-      });
-    });
   }
 }

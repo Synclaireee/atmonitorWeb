@@ -13,6 +13,9 @@
                 <li class="nav-item" *ngIf="currUser['pktVendor']== 'PKT' && admin">
                     <a [routerLink]="RoutePaths.needHelp.toUrl()" [routerLinkActive]="'active'" class="nav-link">Need Help Dashboard</a>
                 </li>
+                <li class="nav-item" *ngIf="admin">
+                    <a class="nav-link" [routerLink]="RoutePaths.finishedDashboard.toUrl()" [routerLinkActive]="'active'">Finished Dashboard</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto align-right">
                 <li class="nav-item navbar-text col-auto">

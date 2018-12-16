@@ -56,12 +56,25 @@
                     <td class="text-center align-middle"
                         *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['confirmHelpTime'] == null && job.data()['status'] !='FINISHED'">
 
+                        <!--besides NOT ACCEPTED-->
                         <material-fab mini title="Assign"
-                                      *ngIf="job.data()['status'] =='PENDING' || job.data()['status'] =='DECLINED' || job.data()['status'] == 'NOT ACCEPTED'"
-                                      [routerLink]="jobUrl(job.data()['ticketNum'])"
+                                      *ngIf="job.data()['status'] =='PENDING' || job.data()['status'] =='DECLINED'"
+                                      (trigger)="jobUrl(job.data()['ticketNum'])"
                                       [routerLinkActive]="'active'">
                             <material-icon mini raised icon="motorcycle"></material-icon>
                         </material-fab>
+
+                        <!--NOT ACCEPTED-->
+
+                        <material-fab mini title="Assigned"
+                                      *ngIf="job.data()['status'] == 'NOT ACCEPTED'"
+                                      (trigger)="jobUrl(job.data()['ticketNum'])"
+                                      [routerLinkActive]="'active'"
+                                      [disabled] ="true">
+                            <material-icon mini raised icon="motorcycle"></material-icon>
+                        </material-fab>
+
+
                         <material-fab mini title="Delete"
                                       *ngIf="job.data()['isManual'].toString() =='true' && job.data()['status'] != 'DELETED'"
                                       data-toggle="modal"

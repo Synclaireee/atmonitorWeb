@@ -5,6 +5,7 @@ import 'route_paths.dart';
 import 'AssignTo/assign_to_component.template.dart' as assign_to_template;
 import 'Dashboard/dashboard_component.template.dart' as dashboard_template;
 import 'NeedHelpDashboard/need_help_component.template.dart' as need_help_template;
+import 'FinishedDashboard/finished_dashboard_component.template.dart' as finished_dashboard_template;
 export 'route_paths.dart';
 
 class Routes {
@@ -22,9 +23,16 @@ class Routes {
     routePath:  RoutePaths.needHelp,
     component:  need_help_template.NeedHelpComponentNgFactory,
   );
+
+  static final finishedDashboard = RouteDefinition(
+    routePath:  RoutePaths.finishedDashboard,
+    component:  finished_dashboard_template.FinishedDashboardComponentNgFactory,
+  );
+
   static final all = <RouteDefinition>[
     assignTo,
     dashboard,
     needHelpDashboard,
+    finishedDashboard,
   ];
 }
