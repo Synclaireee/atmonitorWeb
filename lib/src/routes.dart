@@ -8,6 +8,11 @@ import 'NeedHelpDashboard/need_help_component.template.dart' as need_help_templa
 import 'FinishedDashboard/finished_dashboard_component.template.dart' as finished_dashboard_template;
 import 'DetailDashboard/detail_dashboard_component.template.dart' as detail_dashboard_template;
 import 'ManualTicket/manual_ticket_component.template.dart' as manual_ticket_template;
+import 'AOCDashboardPKT/aoc_dashboard_pkt_component.template.dart' as aoc_dashboard_pkt_template;
+import 'AOCDashboardPKTFinished/aoc_dashboard_pkt_finished_component.template.dart' as aoc_dashboard_pkt_finished_template;
+import 'AOCDashboardVendor/aoc_dashboard_vendor_component.template.dart' as aoc_dasboard_vendor_template;
+import 'AOCDashboardVendorFinished/aoc_dashboard_vendor_finished_component.template.dart' as aoc_dashboard_vendor_finished_template;
+
 export 'route_paths.dart';
 
 class Routes {
@@ -42,7 +47,24 @@ class Routes {
     component: manual_ticket_template.ManualTicketComponentNgFactory,
   );
 
+  static final AOCDashboardPKT = RouteDefinition(
+    routePath: RoutePaths.AOCDashboardPKT,
+    component: aoc_dashboard_pkt_template.AOCDashboardPKTComponentNgFactory,
+  );
+  static final AOCDashboardPKTFinished = RouteDefinition(
+    routePath: RoutePaths.AOCDashboardPKTFinished,
+    component: aoc_dashboard_pkt_finished_template.AOCDashboardPKTFinishedComponentNgFactory
+  );
 
+  static final AOCDashboardVendor = RouteDefinition(
+    routePath: RoutePaths.AOCDashboardVendor,
+    component: aoc_dasboard_vendor_template.AOCDashboardVendorComponentNgFactory,
+  );
+
+  static final AOCDashboardVendorFinished = RouteDefinition(
+    routePath: RoutePaths.AOCDashboardVendorFinished,
+    component: aoc_dashboard_vendor_finished_template.AOCDashboardVendorFinishedComponentNgFactory,
+  );
   static final all = <RouteDefinition>[
     assignTo,
     dashboard,
@@ -50,5 +72,9 @@ class Routes {
     finishedDashboard,
     detailDashboard,
     manualTicket,
+    AOCDashboardPKT,
+    AOCDashboardPKTFinished,
+    AOCDashboardVendor,
+    AOCDashboardVendorFinished,
   ];
 }

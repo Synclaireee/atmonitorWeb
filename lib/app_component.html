@@ -7,19 +7,32 @@
         <a class="navbar-brand" href="">Logo</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" *ngIf="admin">
+                <li class="nav-item" *ngIf="currUser['role'] != 'Admin AOC' && admin">
                     <a class="nav-link" [routerLink]="RoutePaths.dashboard.toUrl()" [routerLinkActive]="'active'">Dashboard</a>
                 </li>
-                <li class="nav-item" *ngIf="currUser['pktVendor']== 'PKT' && admin">
+                <li class="nav-item" *ngIf="currUser['role'] != 'Admin AOC' && currUser['pktVendor']== 'PKT' && admin">
                     <a [routerLink]="RoutePaths.needHelp.toUrl()" [routerLinkActive]="'active'" class="nav-link">Need Help Dashboard</a>
                 </li>
-                <li class="nav-item" *ngIf="admin">
+                <li class="nav-item" *ngIf="currUser['role'] != 'Admin AOC' && admin">
                     <a class="nav-link" [routerLink]="RoutePaths.finishedDashboard.toUrl()" [routerLinkActive]="'active'">Finished Dashboard</a>
+                </li>
+                <li class="nav-item" *ngIf="currUser['role'] == 'Admin AOC'">
+                    <a class="nav-link" [routerLink]="RoutePaths.AOCDashboardPKT.toUrl()" [routerLinkActive]="'active'">Dashboard PKT</a>
+                </li>
+                <li class="nav-item" *ngIf="currUser['role'] == 'Admin AOC'">
+                    <a class="nav-link" [routerLink]="RoutePaths.AOCDashboardPKTFinished.toUrl()" [routerLinkActive]="'active'">Finished Dashboard PKT</a>
+                </li>
+                <li class="nav-item" *ngIf="currUser['role'] == 'Admin AOC'">
+                    <a class="nav-link" [routerLink]="RoutePaths.AOCDashboardVendor.toUrl()" [routerLinkActive]="'active'">Dashboard Vendor</a>
+                </li>
+                <li class="nav-item" *ngIf="currUser['role'] == 'Admin AOC'">
+                    <a class="nav-link" [routerLink]="RoutePaths.AOCDashboardVendorFinished.toUrl()" [routerLinkActive]="'active'">Finished Dashboard Vendor</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto align-right">
                 <li class="nav-item navbar-text col-auto">
-                    <div>Halo, {{currUser['name']}} <b>{{pktVendorName}}</b></div>
+                    <div *ngIf="currUser['role'] != 'Admin AOC'">Halo, {{currUser['name']}} <b>{{pktVendorName}}</b></div>
+                    <div *ngIf="currUser['role'] == 'Admin AOC'">Halo, {{currUser['name']}}</div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" (click)="logout()" href="">Logout</a>

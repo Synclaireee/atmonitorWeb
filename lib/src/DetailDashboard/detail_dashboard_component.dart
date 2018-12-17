@@ -60,7 +60,6 @@ class DetailDashboardComponent implements OnInit, OnActivate {
   bool getUserComplete = false;
   Map<String, dynamic> currUser = new Map<String, dynamic>();
   Map<String, dynamic> currJob = new Map<String, dynamic>();
-  List<Map<String, dynamic>> listTechnician = new List<Map<String, dynamic>>();
 
   @override
   void ngOnInit() {
@@ -73,23 +72,6 @@ class DetailDashboardComponent implements OnInit, OnActivate {
       currJob = snapshot.docs.first.data();
     }).whenComplete(() {
       getTechName();
-    });
-  }
-
-  // if(currUser.pktvendorid == pktvendorid && substring.role == teknisi)
-  getListTechnician() {
-    db.collection("users")
-        .where("pktVendorId", "==", currUser['pktVendorId'])
-        .get()
-        .then((snapshot) {
-      //filtering role
-      snapshot.docs.forEach((it) {
-        String role = it.data()['role'].toString();
-        String temp = role.substring(0, role.indexOf(" "));
-        if (temp == 'Teknisi') {
-          listTechnician.add(it.data());
-        }
-      });
     });
   }
 
@@ -107,7 +89,6 @@ class DetailDashboardComponent implements OnInit, OnActivate {
     }).whenComplete(() {
       getUserComplete = true;
       //get list of technician
-      getListTechnician();
     });
   }
 

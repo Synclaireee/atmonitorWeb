@@ -110,7 +110,7 @@ class FinishedDashboardComponent implements OnInit, OnDestroy {
   //force Reload
   reload() {
     _route.navigate(RoutePaths.finishedDashboard.toUrl(),
-        NavigationParams(reload: true, replace: true));
+        NavigationParams(reload: true));
   }
 
   autoReload() {

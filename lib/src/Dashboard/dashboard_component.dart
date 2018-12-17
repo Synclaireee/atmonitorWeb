@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html' as h;
 import 'dart:js';
 
 import 'package:angular_router/angular_router.dart';
@@ -8,7 +9,6 @@ import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart';
 import 'package:firebase_dart_ui/firebase_dart_ui.dart';
 
-import 'package:firebase/src/interop/firebase_interop.dart';
 import '../routes.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
@@ -63,7 +63,7 @@ class DashboardComponent implements OnInit, OnDestroy {
 
   //get all Job List
   getJobs() {
-    if(currUser['pktVendor'] == "PKT") {
+    if (currUser['pktVendor'] == "PKT") {
       CollectionReference ref = db.collection("jobs");
       ref
           .orderBy("status", "desc")
@@ -72,7 +72,7 @@ class DashboardComponent implements OnInit, OnDestroy {
           .then((snapshot) {
         jobList = snapshot.docs;
       });
-    } else{
+    } else {
       CollectionReference ref = db.collection("jobs");
       ref
           .orderBy("vStatus", "desc")
@@ -103,7 +103,7 @@ class DashboardComponent implements OnInit, OnDestroy {
     }).whenComplete(() {
       isAdmin();
       futureComplete = true;
-    }).then((_){
+    }).then((_) {
       getJobs();
     });
   }
@@ -130,7 +130,7 @@ class DashboardComponent implements OnInit, OnDestroy {
   //force Reload
   reload() {
     _route.navigate(RoutePaths.dashboard.toUrl(),
-        NavigationParams(reload: true, replace: true));
+        NavigationParams(reload: true));
   }
 
   autoReload() {
@@ -146,17 +146,19 @@ class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-
   //helpApprove
   helpApprove(String ticketNum) {
     Query ref = db.collection("jobs").where("ticketNum", "==", ticketNum);
     ref.get().then((snapshot) {
       db.runTransaction((Transaction transaction) async {
         DocumentSnapshot documentSnapshot =
-        await transaction.get(snapshot.docs.first.ref);
+            await transaction.get(snapshot.docs.first.ref);
 
-        await transaction
-            .update(documentSnapshot.ref, data: {"status": "PENDING" , "vStatus" : "vPENDING", "confirmHelpTime": DateTime.now()});
+        await transaction.update(documentSnapshot.ref, data: {
+          "status": "PENDING",
+          "vStatus": "vPENDING",
+          "confirmHelpTime": DateTime.now()
+        });
       });
     });
   }
@@ -165,4 +167,19 @@ class DashboardComponent implements OnInit, OnDestroy {
   String detailUrl(String para) {
     return RoutePaths.detailDashboard.toUrl(parameters: {jobId: '$para'});
   }
+  //test
+  test() {
+    List<Map<String, dynamic>> cleanJob = new List<Map<String, dynamic>>();
+    jobList.forEach((snapshot) {
+      if (currUser['pktVendorId'] == snapshot.data()['pktId'] &&
+          snapshot.data()['confirmHelpTime'] == null &&
+          snapshot.data()['status'] != 'FINISHED') {
+        cleanJob.add(snapshot.data());
+        print("ada");
+      } else {
+        print("tidak");
+      }
+    });
+  }
+  //endTest
 }

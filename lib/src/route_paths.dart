@@ -6,7 +6,12 @@ class RoutePaths {
   static final needHelp = RoutePath(path: 'needHelpDashboard');
   static final finishedDashboard = RoutePath(path: 'finishedDashboard');
   static final detailDashboard = RoutePath(path:'${'detail'}/:$jobId');
-  static final manualTicket = RoutePath(path: '/createManualTicket');
+  static final manualTicket = RoutePath(path: 'createManualTicket');
+  static final AOCDashboardPKT = RoutePath(path: 'PKTDashboard');
+  static final AOCDashboardPKTFinished = RoutePath(path: 'finishedPKTDashboard');
+  static final AOCDashboardVendor = RoutePath(path: 'vendorDashboard');
+  static final AOCDashboardVendorFinished = RoutePath(path: 'finishedVendorDashboard');
+
 
   String getId(Map<String, String> parameters) {
     final id = parameters[jobId];

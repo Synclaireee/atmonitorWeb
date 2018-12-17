@@ -94,9 +94,12 @@ class AppComponent implements OnInit {
 
   //getCurrUser pktVendorName
   pktVenName(){
-    db.collection("pktVendors").where("pktVendorId", "==", currUser['pktVendorId']).get().then((snapshot){
-      pktVendorName = snapshot.docs.first.data()['pktVendorName'];
-    });
+    if(currUser['role'] != 'Admin AOC') {
+      db.collection("pktVendors").where(
+          "pktVendorId", "==", currUser['pktVendorId']).get().then((snapshot) {
+        pktVendorName = snapshot.docs.first.data()['pktVendorName'];
+      });
+    }
   }
 
 
