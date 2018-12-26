@@ -14,6 +14,7 @@ dependencies:
   angular_router: ^2.0.0-alpha+19
   firebase:
   firebase_dart_ui: ^0.1.1
+  csv: ^4.0.1
 
 dev_dependencies:
   angular_test: ^2.0.0

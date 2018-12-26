@@ -1,6 +1,10 @@
 import 'dart:async';
-import 'dart:html' as h;
 import 'dart:js';
+import 'package:csv/csv.dart';
+import 'dart:convert' as c;
+import 'dart:html' as h;
+import 'package:angular/security.dart' as s;
+
 
 import 'package:angular_router/angular_router.dart';
 import 'package:angular/angular.dart';
@@ -8,6 +12,7 @@ import 'package:angular_components/angular_components.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart';
 import 'package:firebase_dart_ui/firebase_dart_ui.dart';
+import 'package:angular_forms/angular_forms.dart';
 
 import '../routes.dart';
 
@@ -27,7 +32,9 @@ import '../routes.dart';
     FirebaseAuthUIComponent,
     MaterialFabComponent,
     MaterialIconComponent,
-    routerDirectives
+    routerDirectives,
+    s.DomSanitizationService,
+    formDirectives,
   ],
   pipes: [commonPipes],
   exports: [RoutePaths, Routes],
@@ -40,7 +47,8 @@ class DashboardComponent implements OnInit, OnDestroy {
   bool futureComplete = false;
   Timer _auto;
 
-  DashboardComponent(this._route);
+  s.DomSanitizationService sanitizer;
+  DashboardComponent(this._route,this.sanitizer);
 
   @override
   void ngOnInit() {
@@ -71,6 +79,8 @@ class DashboardComponent implements OnInit, OnDestroy {
           .get()
           .then((snapshot) {
         jobList = snapshot.docs;
+      }).then((_){
+        test();
       });
     } else {
       CollectionReference ref = db.collection("jobs");
@@ -129,8 +139,8 @@ class DashboardComponent implements OnInit, OnDestroy {
 
   //force Reload
   reload() {
-    _route.navigate(RoutePaths.dashboard.toUrl(),
-        NavigationParams(reload: true));
+    _route.navigate(
+        RoutePaths.dashboard.toUrl(), NavigationParams(reload: true));
   }
 
   autoReload() {
@@ -167,19 +177,32 @@ class DashboardComponent implements OnInit, OnDestroy {
   String detailUrl(String para) {
     return RoutePaths.detailDashboard.toUrl(parameters: {jobId: '$para'});
   }
+
   //test
+  var Test;
   test() {
-    List<Map<String, dynamic>> cleanJob = new List<Map<String, dynamic>>();
+    List<Map<String, String>> cleanJob = new List<Map<String, String>>();
     jobList.forEach((snapshot) {
+      Map<String, String> MapKeyValues = new Map<String, String>();
       if (currUser['pktVendorId'] == snapshot.data()['pktId'] &&
           snapshot.data()['confirmHelpTime'] == null &&
           snapshot.data()['status'] != 'FINISHED') {
-        cleanJob.add(snapshot.data());
-        print("ada");
-      } else {
-        print("tidak");
-      }
+        snapshot.data().forEach((key, value) {
+          MapKeyValues.addAll({key.toString(): value.toString()});
+        });
+      } else {}
+      if (MapKeyValues.isNotEmpty) cleanJob.add(MapKeyValues);
     });
+
+    var jsons = c.json.encode(cleanJob);
+
+    h.Blob blob = new h.Blob([jsons],'text/json','native');
+    Test= sanitizer.bypassSecurityTrustUrl(h.Url.createObjectUrlFromBlob(blob));
   }
-  //endTest
+
+  Test2(var test2){
+
+    //return sanitizer.bypassSecurityTrustUrl(h.Url.createObjectUrlFromBlob(blob));
+  }
+//endTest
 }

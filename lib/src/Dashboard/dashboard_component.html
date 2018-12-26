@@ -11,12 +11,16 @@
                 </div>
 
                 <!--test-->
-                <!--<div class="animated fadeIn d-inline float-right">-->
-                    <!--<button class="btn btn-dark mb-2 rounded" (click)="test()" id="test">test</button>-->
-                <!--</div>-->
+                <div class="animated fadeIn d-inline float-right">
+                    <a class="btn btn-dark mb-2 rounded"  id="test"  [href]="Test" target="_blank" download="test.json">test</a>
+                </div>
+
+                <div class="animated fadeIn d-inline float-right">
+                    <button class="btn btn-dark mb-2 rounded"  id="test2" (click)="Test2(test2)">test2</button>
+                </div>
                 <!--end-->
             </div>
-            <table class="table table-inverse">
+            <table class="table table-inverse" #test2>
                 <thead>
                 <tr>
                     <th class="text-center align-middle" scope="col">Ticket</th>

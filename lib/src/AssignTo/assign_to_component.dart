@@ -23,6 +23,7 @@ import 'package:angular_forms/angular_forms.dart';
   pipes: [commonPipes],
 )
 class AssignToComponent implements OnInit, OnActivate {
+  String qSearch;
   fs.Firestore db = fb.firestore();
 
   bool isAuthenticated() =>
@@ -64,6 +65,7 @@ class AssignToComponent implements OnInit, OnActivate {
 
   @override
   void ngOnInit() {
+    qSearch = "";
     getCurrUser();
   }
 
@@ -174,4 +176,6 @@ class AssignToComponent implements OnInit, OnActivate {
       });
     }
   }
+
+
 }

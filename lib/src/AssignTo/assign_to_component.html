@@ -108,7 +108,7 @@
                         <!--search-->
 
                         <div class="form-group col-6 m-auto">
-                            <input id="searchTechnician" type="text" class="form-control" placeholder="Search...">
+                            <input #search [(ngModel)]="qSearch" type="text" class="form-control" placeholder="Search...">
                         </div>
 
 
@@ -116,7 +116,7 @@
 
                         <div class="m-auto text-left" *ngIf="currUser['pktVendor'] == 'PKT' ">
                             <div *ngFor="let tech of listTechnician" class="col-10 pt-4">
-                                <div class="row">
+                                <div class="row" *ngIf="tech['name'].toLowerCase().contains(search.value.toLowerCase())">
                                     <div class="col-3"></div>
                                     <div class="col-5 bg-dark rounded text-light pt-1">
                                         <span>{{tech['name']}}</span>
@@ -149,7 +149,7 @@
                         <!--list Vendor-->
                         <div class="m-auto text-left" *ngIf="currUser['pktVendor'] == 'Vendor'">
                             <div *ngFor="let tech of listTechnician" class="col-10 pt-4">
-                                <div class="row">
+                                <div class="row" *ngIf="tech['name'].toLowerCase().contains(search.value.toLowerCase())">
                                     <div class="col-3"></div>
                                     <div class="col-5 bg-dark rounded text-light pt-1">
                                         <span>{{tech['name']}}</span>
