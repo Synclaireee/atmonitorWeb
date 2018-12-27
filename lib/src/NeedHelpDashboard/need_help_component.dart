@@ -47,16 +47,10 @@ class NeedHelpComponent implements OnInit, OnDestroy {
 
   bool isAuthenticated() => fb.auth().currentUser != null;
 
-  String get userEmail => fb.auth().currentUser?.email;
-
-  String get displayName => fb.auth().currentUser?.displayName;
-
   String get uid => fb.auth().currentUser?.uid;
 
   Map<String, dynamic> currUser;
 
-  // If the provider gave us an access token, we put it here.
-  String providerAccessToken = "";
 
   //get all Job List
   getJobs() {

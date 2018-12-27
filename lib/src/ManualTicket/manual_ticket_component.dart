@@ -114,4 +114,5 @@ class ManualTicketComponent implements OnInit {
 
     db.collection("jobs").add(currJob);
   }
+
 }

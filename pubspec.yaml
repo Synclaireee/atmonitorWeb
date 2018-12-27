@@ -15,6 +15,7 @@ dependencies:
   firebase:
   firebase_dart_ui: ^0.1.1
   csv: ^4.0.1
+  firebase_admin_interop: ^1.1.0
 
 dev_dependencies:
   angular_test: ^2.0.0

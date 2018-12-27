@@ -11,7 +11,7 @@ class RoutePaths {
   static final AOCDashboardPKTFinished = RoutePath(path: 'finishedPKTDashboard');
   static final AOCDashboardVendor = RoutePath(path: 'vendorDashboard');
   static final AOCDashboardVendorFinished = RoutePath(path: 'finishedVendorDashboard');
-
+  static final AddTechnician = RoutePath(path: 'addTechinican');
 
   String getId(Map<String, String> parameters) {
     final id = parameters[jobId];

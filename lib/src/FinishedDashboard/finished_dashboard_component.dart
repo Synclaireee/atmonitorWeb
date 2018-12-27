@@ -53,12 +53,12 @@ class FinishedDashboardComponent implements OnInit, OnDestroy {
   Map<String, dynamic> currUser;
 
   //Convert uid to Name
-  getNameFromUid(String id) {
-    db.collection("users").where("uid","==",id).get().then((snapshot){
-      print('test');
-      return snapshot.docs.first.data()['name'];
-    });
-  }
+//  getNameFromUid(String id) {
+//    db.collection("users").where("uid","==",id).get().then((snapshot){
+//      print('test');
+//      return snapshot.docs.first.data()['name'];
+//    });
+//  }
 
   //get all Job List
   getJobs() {

@@ -25,10 +25,6 @@ import 'package:angular_forms/angular_forms.dart';
 class DetailDashboardComponent implements OnInit, OnActivate {
   fs.Firestore db = fb.firestore();
 
-  bool isAuthenticated() =>
-      fb
-          .auth()
-          .currentUser != null;
 
   String get uid =>
       fb
@@ -36,23 +32,6 @@ class DetailDashboardComponent implements OnInit, OnActivate {
           .currentUser
           ?.uid;
 
-  String get email =>
-      fb
-          .auth()
-          .currentUser
-          ?.email;
-
-  String get userEmail =>
-      fb
-          .auth()
-          .currentUser
-          ?.email;
-
-  String get displayName =>
-      fb
-          .auth()
-          .currentUser
-          ?.displayName;
   String jobId;
   String techName;
   String vTechName;
@@ -65,6 +44,11 @@ class DetailDashboardComponent implements OnInit, OnActivate {
   void ngOnInit() {
     getCurrUser();
   }
+
+  bool isAuthenticated() =>
+      fb
+          .auth()
+          .currentUser != null;
 
   getJob() {
     db.collection("jobs").where("ticketNum", "==", jobId).get().then((
@@ -89,52 +73,6 @@ class DetailDashboardComponent implements OnInit, OnActivate {
     }).whenComplete(() {
       getUserComplete = true;
       //get list of technician
-    });
-  }
-
-  //assignJob PKT non helper
-  assignJob(String techId) {
-    db.collection("jobs").where("ticketNum", "==", currJob['ticketNum'])
-        .get()
-        .then((snapshot) {
-      print(snapshot.docs.first.data()['ticketNum']);
-      db.runTransaction((fs.Transaction transaction) async {
-        fs.DocumentSnapshot documentSnapshot = await transaction.get(
-            snapshot.docs.first.ref);
-        await transaction.update(documentSnapshot.ref,
-            data: {"assignedTo": techId, "status": "NOT ACCEPTED", "assignedTime" : DateTime.now()});
-      });
-    });
-  }
-
-
-  //assignJob PKT non helper
-  hAssignJob(String techId) {
-    db.collection("jobs").where("ticketNum", "==", currJob['ticketNum'])
-        .get()
-        .then((snapshot) {
-      print(snapshot.docs.first.data()['ticketNum']);
-      db.runTransaction((fs.Transaction transaction) async {
-        fs.DocumentSnapshot documentSnapshot = await transaction.get(
-            snapshot.docs.first.ref);
-        await transaction.update(documentSnapshot.ref,
-            data: {"assignedTo": techId, "status": "NOT ACCEPTED", "hAssignedTime" : DateTime.now()});
-      });
-    });
-  }
-
-  //vAssignJob Vendor
-  vAssignJob(String techId) {
-    db.collection("jobs").where("ticketNum", "==", currJob['ticketNum'])
-        .get()
-        .then((snapshot) {
-      print(snapshot.docs.first.data()['ticketNum']);
-      db.runTransaction((fs.Transaction transaction) async {
-        fs.DocumentSnapshot documentSnapshot = await transaction.get(
-            snapshot.docs.first.ref);
-        await transaction.update(documentSnapshot.ref,
-            data: {"vAssignedTo": techId, "vStatus": "vNOT ACCEPTED" , "vAssignedTime" : DateTime.now()});
-      });
     });
   }
 

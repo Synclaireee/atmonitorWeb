@@ -30,6 +30,9 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto align-right">
+                <li class="nav-item" *ngIf="currUser['role'] != 'Admin AOC' && admin">
+                    <a [routerLink]="RoutePaths.AddTechnician.toUrl()" class="nav-link">Add Technician</a>
+                </li>
                 <li class="nav-item navbar-text col-auto">
                     <div *ngIf="currUser['role'] != 'Admin AOC'">Halo, {{currUser['name']}} <b>{{pktVendorName}}</b></div>
                     <div *ngIf="currUser['role'] == 'Admin AOC'">Halo, {{currUser['name']}}</div>

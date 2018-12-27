@@ -26,10 +26,6 @@ class AssignToComponent implements OnInit, OnActivate {
   String qSearch;
   fs.Firestore db = fb.firestore();
 
-  bool isAuthenticated() =>
-      fb
-          .auth()
-          .currentUser != null;
 
   String get uid =>
       fb
@@ -37,23 +33,6 @@ class AssignToComponent implements OnInit, OnActivate {
           .currentUser
           ?.uid;
 
-  String get email =>
-      fb
-          .auth()
-          .currentUser
-          ?.email;
-
-  String get userEmail =>
-      fb
-          .auth()
-          .currentUser
-          ?.email;
-
-  String get displayName =>
-      fb
-          .auth()
-          .currentUser
-          ?.displayName;
   String jobId;
   String techName;
   String vTechName;
@@ -68,6 +47,11 @@ class AssignToComponent implements OnInit, OnActivate {
     qSearch = "";
     getCurrUser();
   }
+
+  bool isAuthenticated() =>
+      fb
+          .auth()
+          .currentUser != null;
 
   getJob() {
     db.collection("jobs").where("ticketNum", "==", jobId).get().then((

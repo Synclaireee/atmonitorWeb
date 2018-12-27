@@ -1,0 +1,95 @@
+<div class="pt-5 mt-3 text-center text-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-10 m-auto">
+                <!--Job Detail-->
+                <div class="card bg-light mt-3 animated fadeIn delay-1s">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>Add Technician</h4>
+                        </div>
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-7 m-auto">
+                                    <form (ngSubmit)="onSubmit()" #jobForm="ngForm">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" ngControl="name"
+                                                   [(ngModel)]="cTech['name']"
+                                                   #name="ngForm"
+                                                   [class.is-valid]="name.valid || name.pristine"
+                                                   [class.is-invalid]="!(name.valid || name.pristine)"
+                                                   placeholder="Name..." required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" ngControl="email"
+                                                   [(ngModel)]="cTech['email']"
+                                                   #email="ngForm"
+                                                   [class.is-valid]="email.valid || email.pristine"
+                                                   [class.is-invalid]="!(email.valid || email.pristine)"
+                                                   placeholder="Email..." required pattern="[A-Za-z0-9.\-]+@[A-Za-z0-9\-]+[.][A-Za-z0-9.\-]+">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" ngControl="phone"
+                                                   [(ngModel)]="cTech['phone']"
+                                                   #phone="ngForm"
+                                                   [class.is-valid]="phone.valid || phone.pristine"
+                                                   [class.is-invalid]="!(phone.valid || phone.pristine)"
+                                                   placeholder="Phone..." required pattern="[0-9]+">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-light" (click)="clear()">Clear</button>
+                                            <button type="submit" class="btn btn-dark" [disabled]="!jobForm.form.valid"
+                                                    data-toggle="modal"
+                                                    data-target="#created"
+                                                    data-backdrop="static"
+                                                    data-keyboard="false">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <!--modal-->
+                                    <div class="modal fade" id="created" tabindex="-1" role="dialog"
+                                         aria-labelledby="modalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalLabel">
+                                                        Input Sukses!
+                                                    </h5>
+
+                                                    <button [routerLink]="RoutePaths.dashboard.toUrl()"
+                                                            [routerLinkActive]="'active'" type="button" class="close"
+                                                            data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    Teknisi berhasil di input!
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                            [routerLink]="RoutePaths.dashboard.toUrl()"
+                                                            [routerLinkActive]="'active'">Kembali
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--endModal-->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
