@@ -62,9 +62,12 @@
                                                         Input Sukses!
                                                     </h5>
 
-                                                    <button [routerLink]="RoutePaths.dashboard.toUrl()"
-                                                            [routerLinkActive]="'active'" type="button" class="close"
-                                                            data-dismiss="modal" aria-label="Close">
+                                                    <button (click) = "logout()"
+                                                            href=""
+                                                            type="button" class="close"
+                                                            data-dismiss="modal" aria-label="Close"
+                                                            [routerLink]="RoutePaths.dashboard.toUrl()"
+                                                            [routerLinkActive]="'active'">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
@@ -75,6 +78,7 @@
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                            (click) = "logout()"
                                                             [routerLink]="RoutePaths.dashboard.toUrl()"
                                                             [routerLinkActive]="'active'">Kembali
                                                     </button>

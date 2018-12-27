@@ -33,6 +33,9 @@ import '../routes.dart';
   exports: [RoutePaths, Routes],
 )
 class AddTechnicianComponent implements OnInit {
+  Router _route;
+  AddTechnicianComponent(this._route);
+
   Firestore db = fb.firestore();
   bool futureComplete = false;
 
@@ -76,6 +79,7 @@ class AddTechnicianComponent implements OnInit {
     await fb.auth().createUserAndRetrieveDataWithEmailAndPassword(cTech['email'], "default").then((u){
       cTech['uid'] = u.user.uid;
       print(cTech['uid']);
+      db.collection("users").add(cTech);
     });
 
 
@@ -103,5 +107,9 @@ class AddTechnicianComponent implements OnInit {
 //    });
 //    //test
 
+  }
+
+  logout() async{
+    await fb.auth().signOut();
   }
 }

@@ -1,4 +1,4 @@
-<div class="pt-5 mt-3 animated fadeIn" *ngIf="futureComplete && (admin)">
+<div class="pt-5 mt-3 animated fadeIn" *ngIf="isAuthenticated() && futureComplete && (admin)">
     <!--PKT Table-->
     <div *ngIf="currUser['pktVendor'] == 'PKT'">
         <div class="col-10 w-100 m-auto">
