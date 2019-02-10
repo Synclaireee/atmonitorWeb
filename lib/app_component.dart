@@ -43,8 +43,6 @@ class AppComponent implements OnInit {
 
   String get uid => fb.auth().currentUser?.uid;
 
-  String get uName => fb.auth().currentUser?.displayName;
-
   String pktVendorName;
 
   Map<String, dynamic> currUser = new Map<String,dynamic>();

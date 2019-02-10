@@ -76,10 +76,20 @@ class AddTechnicianComponent implements OnInit {
     cTech['pktVendorId'] = currUser['pktVendorId'];
     cTech['role'] = "Teknisi " + currUser['pktVendor'];
 
-    await fb.auth().createUserAndRetrieveDataWithEmailAndPassword(cTech['email'], "default").then((u){
+    var secondApp = fb.initializeApp(
+        apiKey: 'AIzaSyDsjgrTbtdNenCDvx76qhcKR-hGIWJ9x58',
+        authDomain: 'fir-testing-c9acf.firebaseapp.com',
+        databaseURL: 'https://fir-testing-c9acf.firebaseio.com',
+        projectId: 'fir-testing-c9acf',
+        storageBucket: 'fir-testing-c9acf.appspot.com',
+        messagingSenderId: '895394713441',
+        name: "second");
+
+    await secondApp.auth().createUserAndRetrieveDataWithEmailAndPassword(cTech['email'], "default").then((u){
       cTech['uid'] = u.user.uid;
       print(cTech['uid']);
       db.collection("users").add(cTech);
+      secondApp.auth().signOut();
     });
 
 

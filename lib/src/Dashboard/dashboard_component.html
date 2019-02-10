@@ -11,13 +11,13 @@
                 </div>
 
                 <!--test-->
-                <div class="animated fadeIn d-inline float-right">
-                    <a class="btn btn-dark mb-2 rounded"  id="test"  [href]="Test" target="_blank" download="test.json">test</a>
-                </div>
+                <!--<div class="animated fadeIn d-inline float-right">-->
+                    <!--<a class="btn btn-dark mb-2 rounded"  id="test"  [href]="Test" target="_blank" download="test.json">Download</a>-->
+                <!--</div>-->
 
-                <div class="animated fadeIn d-inline float-right">
-                    <button class="btn btn-dark mb-2 rounded"  id="test2" (click)="Test2(test2)">test2</button>
-                </div>
+                <!--<div class="animated fadeIn d-inline float-right">-->
+                    <!--<button class="btn btn-dark mb-2 rounded"  id="test2" (click)="Test2(test2)">test2</button>-->
+                <!--</div>-->
                 <!--end-->
             </div>
             <table class="table table-inverse" #test2>
@@ -113,9 +113,9 @@
                             <material-icon icon="assignment"></material-icon>
                         </material-fab>
 
-                        <material-fab mini title="History Machine">
-                            <material-icon icon="history"></material-icon>
-                        </material-fab>
+                        <!--<material-fab mini title="History Machine">-->
+                            <!--<material-icon icon="history"></material-icon>-->
+                        <!--</material-fab>-->
                     </td>
 
                 </tr>
@@ -251,7 +251,7 @@
                         *ngIf="currUser['pktVendorId'] == job.data()['vendorId'] && job.data()['vStatus'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
 
                         <material-fab mini title="Assign"
-                                      *ngIf="job.data()['vStatus'] == 'vPENDING' || job.data()['vStatus'] =='vDECLINED' || job.data()['vStatus'] == 'vNOT ACCEPTED'"
+                                      *ngIf="job.data()['vStatus'] == 'vPENDING' || job.data()['vStatus'] =='vDECLINED'"
                                       [routerLink]="jobUrl(job.data()['ticketNum'])"
                                       [routerLinkActive]="'active'">
                             <material-icon mini raised icon="motorcycle"></material-icon>
@@ -262,9 +262,9 @@
                             <material-icon icon="assignment"></material-icon>
                         </material-fab>
 
-                        <material-fab mini title="History Machine">
-                            <material-icon icon="history"></material-icon>
-                        </material-fab>
+                        <!--<material-fab mini title="History Machine">-->
+                            <!--<material-icon icon="history"></material-icon>-->
+                        <!--</material-fab>-->
                     </td>
                 </tr>
                 </tbody>

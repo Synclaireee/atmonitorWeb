@@ -13,6 +13,7 @@ import 'AOCDashboardPKTFinished/aoc_dashboard_pkt_finished_component.template.da
 import 'AOCDashboardVendor/aoc_dashboard_vendor_component.template.dart' as aoc_dasboard_vendor_template;
 import 'AOCDashboardVendorFinished/aoc_dashboard_vendor_finished_component.template.dart' as aoc_dashboard_vendor_finished_template;
 import 'AddTechnician/add_technician_component.template.dart' as add_technician_template;
+import 'DeleteTechnician/delete_technician_component.template.dart' as delete_technician_template;
 export 'route_paths.dart';
 
 class Routes {
@@ -71,6 +72,11 @@ class Routes {
     component: add_technician_template.AddTechnicianComponentNgFactory,
   );
 
+  static final DeleteTechnician = RouteDefinition(
+    routePath: RoutePaths.DeleteTechnician,
+    component: delete_technician_template.DeleteTechnicianComponentNgFactory,
+  );
+
   static final all = <RouteDefinition>[
     assignTo,
     dashboard,
@@ -83,5 +89,6 @@ class Routes {
     AOCDashboardVendor,
     AOCDashboardVendorFinished,
     AddTechnician,
+    DeleteTechnician,
   ];
 }

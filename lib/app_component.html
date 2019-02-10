@@ -4,7 +4,7 @@
 <div *ngIf="isAuthenticated()">
     <!--navBar-->
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top">
-        <a class="navbar-brand" href="">Logo</a>
+        <a class="navbar-brand" href=""><img src="logo.png" height="30" width="30"/></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" *ngIf="currUser['role'] != 'Admin AOC' && admin">
@@ -32,6 +32,9 @@
             <ul class="navbar-nav ml-auto align-right">
                 <li class="nav-item" *ngIf="currUser['role'] != 'Admin AOC' && admin">
                     <a [routerLink]="RoutePaths.AddTechnician.toUrl()" class="nav-link">Add Technician</a>
+                </li>
+                <li class="nav-item" *ngIf="currUser['role'] != 'Admin AOC' && admin">
+                    <a [routerLink]="RoutePaths.DeleteTechnician.toUrl()" class="nav-link">Delete Technician</a>
                 </li>
                 <li class="nav-item navbar-text col-auto">
                     <div *ngIf="currUser['role'] != 'Admin AOC'">Halo, {{currUser['name']}} <b>{{pktVendorName}}</b></div>

@@ -64,14 +64,14 @@
                         *ngIf="currUser['pktVendorId'] == job.data()['pktId'] && job.data()['confirmHelpTime'] != null && (job.data()['vStatus'] !='vFINISHED' || job.data()['status'] != 'FINISHED')">
 
                         <material-fab mini title="Assign"
-                                      *ngIf="job.data()['status'] =='PENDING' || job.data()['status'] =='DECLINED' || job.data()['status'] == 'NOT ACCEPTED'"
+                                      *ngIf="job.data()['status'] =='PENDING' || job.data()['status'] =='DECLINED'"
                                       [routerLink]="jobUrl(job.data()['ticketNum'])"
                                       [routerLinkActive]="'active'">
                             <material-icon mini raised icon="motorcycle"></material-icon>
                         </material-fab>
-                        <material-fab mini title="History Machine">
-                            <material-icon icon="history"></material-icon>
-                        </material-fab>
+                        <!--<material-fab mini title="History Machine">-->
+                            <!--<material-icon icon="history"></material-icon>-->
+                        <!--</material-fab>-->
                     </td>
                 </tr>
                 </tbody>

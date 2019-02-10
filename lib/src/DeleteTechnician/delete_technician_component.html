@@ -1,0 +1,81 @@
+<div class="pt-5 mt-3 text-center text-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-10 m-auto">
+                <h3 class="animated fadeIn">Hapus Teknisi</h3>
+
+                <!--technician-->
+                <div class="card bg-light mt-3 animated fadeIn delay-2s">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>List Teknisi</h4>
+                        </div>
+
+                        <!--search-->
+
+                        <div class="form-group col-6 m-auto">
+                            <input #search [(ngModel)]="qSearch" type="text" class="form-control" placeholder="Search...">
+                        </div>
+
+
+                        <!--list PKT-->
+
+                        <div class="m-auto text-left">
+                            <div *ngFor="let tech of listTechnician" class="col-10 pt-4">
+                                <div class="row" *ngIf="tech['name'].toLowerCase().contains(search.value.toLowerCase())">
+                                    <div class="col-3"></div>
+                                    <div class="col-5 bg-dark rounded text-light pt-1">
+                                        <span>{{tech['name']}}</span>
+                                    </div>
+
+                                    <div class="col">
+                                        <button type="button" data-toggle="modal" data-target="#successDelete"
+                                                data-backdrop="static"
+                                                data-keyboard="false"
+                                                class="btn btn-sm btn-secondary" (click)="deleteTechnician(tech['uid'])">Hapus
+                                        </button>
+                                    </div>
+
+                                    <div class="w-100"></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--modal-->
+                        <div class="modal fade" id="successDelete" tabindex="-1" role="dialog"
+                             aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalLabel">
+                                            Hapus Sukses!
+                                        </h5>
+
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        Teknisi berhasil di hapus!
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <!--PKT + Vendor-->
+                                        <button type="button"
+                                                class="btn btn-secondary" data-dismiss="modal"
+                                                [routerLink]="RoutePaths.dashboard.toUrl()"
+                                                [routerLinkActive]="'active'">Kembali
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--endModal-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
